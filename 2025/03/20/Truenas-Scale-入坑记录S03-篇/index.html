@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Truenas Scale 入坑记录S03 ***篇 | Shirker</title><meta name="author" content="Donnie"><meta name="copyright" content="Donnie"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="Truenas Scale 入坑记录S03 ***篇">
+<meta property="og:url" content="https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/index.html">
+<meta property="og:site_name" content="Shirker">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://shirker.xyz/img/20250319152711.jpg">
+<meta property="article:published_time" content="2025-03-20T04:27:36.000Z">
+<meta property="article:modified_time" content="2025-03-20T04:27:38.000Z">
+<meta property="article:author" content="Donnie">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shirker.xyz/img/20250319152711.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Truenas Scale 入坑记录S03 ***篇",
+  "url": "https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/",
+  "image": "https://shirker.xyz/img/20250319152711.jpg",
+  "datePublished": "2025-03-20T04:27:36.000Z",
+  "dateModified": "2025-03-20T04:27:38.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Donnie",
+      "url": "https://shirker.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Truenas Scale 入坑记录S03 ***篇',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/20250319152711.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-mug-saucer"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/seach/"><i class="fa-fw fas fa-magnifying-glass"></i><span> 搜索</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Shirker</span></a><a class="nav-page-title" href="/"><span class="site-name">Truenas Scale 入坑记录S03 ***篇</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-mug-saucer"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/seach/"><i class="fa-fw fas fa-magnifying-glass"></i><span> 搜索</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Truenas Scale 入坑记录S03 ***篇</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-20T04:27:36.000Z" title="发表于 2025-03-20 12:27:36">2025-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-20T04:27:38.000Z" title="更新于 2025-03-20 12:27:38">2025-03-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://shirker.xyz">Donnie</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/">https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://shirker.xyz" target="_blank">Shirker</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/20250319152711.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S02-%E6%97%81%E8%B7%AF%E7%94%B1%E7%AF%87/" title="Truenas Scale 入坑记录S02 旁路由篇"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Truenas Scale 入坑记录S02 旁路由篇</div></div><div class="info-2"><div class="info-item-1">简单设置篇前面设置好了中文，由于Truenas 安装的应用不在国内，是需要挂梯子的，记录下虚拟机安装旁路由的过程，使用istoreos的镜像； 1、提前准备1.1先去数据集创建好两个文件，一个是”添加Zvol”,一个是”添加数据集”；  1.2 创建 Zvol 填写名称以及创建的大小”10G”；  1.3 将下载好的istoreos镜像使用FinalShell上传到服务器，刚刚创建的system文件夹中； 1.4 把镜像复制到虚拟机磁盘上先看下命令解释： 12345Linux dd 命令用于读取、转换并输出数据。dd 可从标准输入或文件中读取数据，根据指定的格式来转换数据，再输出到文件、设备或标准输出。if=文件名：输入文件名，默认为标准输入。即指定源文件。of=文件名：输出文件名，默认为标准输出。即指定目的文件。bs=bytes：同时设置读入/输出的块大小为bytes个字节  进入服务器后台：  使用 sudo -i ，输入密码，密码不显示，回车确认，先获取root权限  复制以下代码 使用”Shift+ins”到控制台粘贴 12345dd...</div></div></div></a><a class="pagination-related" href="/2025/03/20/Nextcloud-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%B1%87%E6%80%BB-E01/" title="Nextcloud 问题解决汇总 E01"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Nextcloud 问题解决汇总 E01</div></div><div class="info-2"><div class="info-item-1">手动上传文件以及产生的问题：occ有三个用于管理Nextcloud中文件的命令： 1234files files:cleanup              #清楚文件缓存  files:scan                 #重新扫描文件系统 files:transfer-ownership   #将所有文件和文件夹都移动到另一个文件夹  我们需要使用 files:scan  来扫描新文件。 123456789101112  格式:  files:scan [-p|--path=&quot;...&quot;] [-q|--quiet] [-v|vv|vvv --verbose] [--all]  [user_id1] ... [user_idN] 参数:  user_id               #扫描所指定的用户（一个或多个，多个用户ID之间要使用空格分开）的所有文件选项:  --path                #限制扫描路径  --all                 #扫描所有已知用户的所有文件  --quiet              ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/20250319152711.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Donnie</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/donniemarc"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">保存操作流程</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/20/Nextcloud-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%B1%87%E6%80%BB-E02/" title="Nextcloud 问题解决汇总 E02">Nextcloud 问题解决汇总 E02</a><time datetime="2025-03-20T04:28:16.000Z" title="发表于 2025-03-20 12:28:16">2025-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/20/Nextcloud-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%B1%87%E6%80%BB-E01/" title="Nextcloud 问题解决汇总 E01">Nextcloud 问题解决汇总 E01</a><time datetime="2025-03-20T04:28:03.000Z" title="发表于 2025-03-20 12:28:03">2025-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/" title="Truenas Scale 入坑记录S03 ***篇">Truenas Scale 入坑记录S03 ***篇</a><time datetime="2025-03-20T04:27:36.000Z" title="发表于 2025-03-20 12:27:36">2025-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S02-%E6%97%81%E8%B7%AF%E7%94%B1%E7%AF%87/" title="Truenas Scale 入坑记录S02 旁路由篇">Truenas Scale 入坑记录S02 旁路由篇</a><time datetime="2025-03-20T03:58:44.000Z" title="发表于 2025-03-20 11:58:44">2025-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/11/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S01-%E5%AE%89%E8%A3%85%E7%AF%87/" title="Truenas Scale 入坑记录S01 安装篇">Truenas Scale 入坑记录S01 安装篇</a><time datetime="2025-03-11T03:50:54.000Z" title="发表于 2025-03-11 11:50:54">2025-03-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Donnie</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

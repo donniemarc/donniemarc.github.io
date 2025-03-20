@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://shirker.xyz/2025/03/20/Nextcloud-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%B1%87%E6%80%BB-E02/</loc>
+    
+    <lastmod>2025-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shirker.xyz/2025/03/20/Nextcloud-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%B1%87%E6%80%BB-E01/</loc>
+    
+    <lastmod>2025-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S03-%E7%AF%87/</loc>
+    
+    <lastmod>2025-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://shirker.xyz/2025/03/20/Truenas-Scale-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95S02-%E6%97%81%E8%B7%AF%E7%94%B1%E7%AF%87/</loc>
     
     <lastmod>2025-03-20</lastmod>
@@ -80,10 +107,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://shirker.xyz/tags/Nextcloud/</loc>
+    <lastmod>2025-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
     <loc>https://shirker.xyz/categories/Truenas-Scale/</loc>
+    <lastmod>2025-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shirker.xyz/categories/Nextcloud/</loc>
     <lastmod>2025-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
