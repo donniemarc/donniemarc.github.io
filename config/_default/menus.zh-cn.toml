@@ -20,22 +20,22 @@
   pageRef = "categories"
   weight = 15
 
-[[main]]
-  name = "机械技术"
-  parent = "分类"
-  pageRef = "categories/机械技术"
-  weight = 16
+#[[main]]
+#  name = "机械技术"
+#  parent = "分类"
+#  pageRef = "categories/机械技术"
+#  weight = 16
 
-[[main]]
-  name = "电子编程"
-  parent = "分类"
-  pageRef = "categories/电子编程"
-  weight = 20
+#[[main]]
+#  name = "电子编程"
+#  parent = "分类"
+ # pageRef = "categories/电子编程"
+ # weight = 20
 
 [[main]]
   name = "博客"
   pageRef = "blog"
-  weight = 15
+  weight = 20
 
 [[main]]
   name = "关于我"

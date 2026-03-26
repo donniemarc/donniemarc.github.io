@@ -8,15 +8,15 @@ title = "Blowfish"
   isoCode = "zh-cn"
   rtl = false
   dateFormat = "2006-01-02"
-  logo = "img/blowfish_logo_transparent.png"
-  description = "一个强大、轻量级的 Hugo 主题。"
+  #logo = "img/blowfish_logo_transparent.png"
+  #description = "一个强大、轻量级的 Hugo 主题。"
 
 [params.author]
   name = "ChillMaker"
-  image = "img/logo.png"
+  #image = "img/logo.png"
   headline = "躺平玩 Tech，机械开源皆爱"
-  bio = "一个强大、轻量级的 Hugo 主题。"
-  links = [
-    { x-twitter = "https://twitter.com/burufugu" },
-    { github = "https://github.com/nunocoracao/blowfish" },
-  ]
+  #bio = "一个强大、轻量级的 Hugo 主题。"
+  #links = [
+  #  { x-twitter = "https://twitter.com/burufugu" },
+  #  { github = "https://github.com/nunocoracao/blowfish" },
+  #]
