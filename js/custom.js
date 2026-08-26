@@ -1,16 +1,16 @@
 // Custom typing effect for home page
-document.addEventListener('DOMContentLoaded', function() {
-  // Check if we're on the home page
-  if (document.querySelector('#page-site-info')) {
+(function() {
+  function initTyping() {
+    // Check if we're on the home page
     const siteTitle = document.querySelector('#site-title');
+    if (!siteTitle) return;
+    
     const subtitleContainer = document.createElement('div');
     subtitleContainer.id = 'site-subtitle';
     subtitleContainer.className = 'subtitle-text';
     
     // Insert after site title
-    if (siteTitle) {
-      siteTitle.parentNode.insertBefore(subtitleContainer, siteTitle.nextSibling);
-    }
+    siteTitle.parentNode.insertBefore(subtitleContainer, siteTitle.nextSibling);
     
     // Typing effect
     const strings = [
@@ -51,4 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start typing after a delay
     setTimeout(type, 1000);
   }
-});
+  
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTyping);
+  } else {
+    initTyping();
+  }
+})();
