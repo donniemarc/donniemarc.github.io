@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>安装部署指南 | PlotVault PDM</title><meta name="author" content="donniemarc"><meta name="copyright" content="donniemarc"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="PlotVault PDM 安装部署指南本文档介绍如何部署 PlotVault PDM 后端服务。PlotVault 支持多种部署方式，推荐使用 Docker Compose 进行一键部署。 前置要求 Docker 和 Docker Compose 至少 1GB 的磁盘空间 网络连接（用于拉取镜像）  方式 A：Docker Compose（推荐）这是最简单的部署方式，只需几步即可完成。 步骤 1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="安装部署指南">
+<meta property="og:url" content="https://625021125.xyz/docs/installation.html">
+<meta property="og:site_name" content="PlotVault PDM">
+<meta property="og:description" content="PlotVault PDM 安装部署指南本文档介绍如何部署 PlotVault PDM 后端服务。PlotVault 支持多种部署方式，推荐使用 Docker Compose 进行一键部署。 前置要求 Docker 和 Docker Compose 至少 1GB 的磁盘空间 网络连接（用于拉取镜像）  方式 A：Docker Compose（推荐）这是最简单的部署方式，只需几步即可完成。 步骤 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://625021125.xyz/images/favicon.jpg">
+<meta property="article:published_time" content="2026-08-26T08:13:28.464Z">
+<meta property="article:modified_time" content="2026-08-26T08:13:28.464Z">
+<meta property="article:author" content="donniemarc">
+<meta property="article:tag" content="cad">
+<meta property="article:tag" content="document-management">
+<meta property="article:tag" content="pdm">
+<meta property="article:tag" content="plotvault">
+<meta property="article:tag" content="self-hosted">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://625021125.xyz/images/favicon.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://625021125.xyz/docs/installation.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: 
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '安装部署指南',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">PlotVault PDM</span></a></span><div id="menus"></div></nav><div id="page-site-info"><h1 id="site-title">安装部署指南</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="PlotVault-PDM-安装部署指南"><a href="#PlotVault-PDM-安装部署指南" class="headerlink" title="PlotVault PDM 安装部署指南"></a>PlotVault PDM 安装部署指南</h1><p>本文档介绍如何部署 PlotVault PDM 后端服务。PlotVault 支持多种部署方式，推荐使用 Docker Compose 进行一键部署。</p>
+<h2 id="前置要求"><a href="#前置要求" class="headerlink" title="前置要求"></a>前置要求</h2><ul>
+<li>Docker 和 Docker Compose</li>
+<li>至少 1GB 的磁盘空间</li>
+<li>网络连接（用于拉取镜像）</li>
+</ul>
+<h2 id="方式-A：Docker-Compose（推荐）"><a href="#方式-A：Docker-Compose（推荐）" class="headerlink" title="方式 A：Docker Compose（推荐）"></a>方式 A：Docker Compose（推荐）</h2><p>这是最简单的部署方式，只需几步即可完成。</p>
+<h3 id="步骤-1：准备配置文件"><a href="#步骤-1：准备配置文件" class="headerlink" title="步骤 1：准备配置文件"></a>步骤 1：准备配置文件</h3><p>从仓库复制 <code>docker-compose.yml</code> 文件到你的部署目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/donniemarc/plotvault-PDM.git</span><br><span class="line"><span class="built_in">cd</span> plotvault-PDM</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-2：配置环境变量"><a href="#步骤-2：配置环境变量" class="headerlink" title="步骤 2：配置环境变量"></a>步骤 2：配置环境变量</h3><p>编辑 <code>docker-compose.yml</code>，替换所有 <code>&lt;...&gt;</code> 占位符：</p>
+<table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>说明</th>
+<th>示例值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;DOCKERHUB_USER&gt;</code></td>
+<td>Docker Hub 用户名</td>
+<td><code>donniemarc</code></td>
+</tr>
+<tr>
+<td><code>&lt;数据库密码&gt;</code></td>
+<td>PostgreSQL 数据库密码</td>
+<td><code>your_secure_password</code></td>
+</tr>
+<tr>
+<td><code>&lt;API_TOKEN&gt;</code></td>
+<td>客户端连接用的访问令牌</td>
+<td><code>your_api_token</code></td>
+</tr>
+<tr>
+<td><code>&lt;HOST_PORT&gt;</code></td>
+<td>对外端口</td>
+<td><code>8642</code></td>
+</tr>
+<tr>
+<td><code>&lt;DATA_HOST_PATH&gt;</code></td>
+<td>图纸数据宿主目录</td>
+<td><code>/home/user/plotvault/data</code></td>
+</tr>
+<tr>
+<td><code>&lt;CONFIG_HOST_PATH&gt;</code></td>
+<td>软件缓存宿主目录</td>
+<td><code>/home/user/plotvault/config</code></td>
+</tr>
+<tr>
+<td><code>&lt;PGDATA_HOST_PATH&gt;</code></td>
+<td>数据库数据宿主目录</td>
+<td><code>/home/user/plotvault/pgdata</code></td>
+</tr>
+</tbody></table>
+<h3 id="步骤-3：启动服务"><a href="#步骤-3：启动服务" class="headerlink" title="步骤 3：启动服务"></a>步骤 3：启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>启动后将运行三个容器：</p>
+<ul>
+<li><strong>db</strong> - PostgreSQL 18（存储元数据）</li>
+<li><strong>plotvault-pdm</strong> - 后端 API，端口 8642</li>
+<li><strong>converter</strong>（可选）- STEP&#x2F;IGES 服务端转换，端口 8000</li>
+</ul>
+<h3 id="步骤-4：验证部署"><a href="#步骤-4：验证部署" class="headerlink" title="步骤 4：验证部署"></a>步骤 4：验证部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://&lt;主机IP&gt;:8642/api/health</span><br></pre></td></tr></table></figure>
+
+<p>预期输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;service&quot;</span><span class="punctuation">:</span><span class="string">&quot;plotvault-pdm&quot;</span><span class="punctuation">,</span><span class="attr">&quot;status&quot;</span><span class="punctuation">:</span><span class="string">&quot;ok&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="方式-B：构建镜像并推送-Docker-Hub"><a href="#方式-B：构建镜像并推送-Docker-Hub" class="headerlink" title="方式 B：构建镜像并推送 Docker Hub"></a>方式 B：构建镜像并推送 Docker Hub</h2><p>适用于需要在远程主机部署的场景。</p>
+<h3 id="步骤-1：构建镜像"><a href="#步骤-1：构建镜像" class="headerlink" title="步骤 1：构建镜像"></a>步骤 1：构建镜像</h3><p>在 Windows PC 上（需 Docker Desktop）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\<span class="built_in">build-push</span>.ps1</span><br></pre></td></tr></table></figure>
+
+<p>按提示输入 Docker Hub 用户名。</p>
+<h3 id="步骤-2：在远程主机部署"><a href="#步骤-2：在远程主机部署" class="headerlink" title="步骤 2：在远程主机部署"></a>步骤 2：在远程主机部署</h3><p>在目标主机上将 <code>docker-compose.yml</code> 的镜像指向 <code>&lt;你的用户名&gt;/plotvault-pdm-server:latest</code>，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="方式-C：离线-tar-导入"><a href="#方式-C：离线-tar-导入" class="headerlink" title="方式 C：离线 tar 导入"></a>方式 C：离线 tar 导入</h2><p>适用于无外网环境。</p>
+<h3 id="步骤-1：在-PC-上构建镜像"><a href="#步骤-1：在-PC-上构建镜像" class="headerlink" title="步骤 1：在 PC 上构建镜像"></a>步骤 1：在 PC 上构建镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t plotvault-pdm-server ./server</span><br><span class="line">docker save plotvault-pdm-server | gzip &gt; plotvault-pdm-server.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-2：传送到目标主机并加载"><a href="#步骤-2：传送到目标主机并加载" class="headerlink" title="步骤 2：传送到目标主机并加载"></a>步骤 2：传送到目标主机并加载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker load &lt; plotvault-pdm-server.tar.gz</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="验证服务"><a href="#验证服务" class="headerlink" title="验证服务"></a>验证服务</h2><p>部署完成后，可以通过以下方式验证服务是否正常运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查容器状态</span></span><br><span class="line">docker compose ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">docker compose logs -f plotvault-pdm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试健康检查接口</span></span><br><span class="line">curl http://localhost:8642/api/health</span><br></pre></td></tr></table></figure>
+
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>部署完成后，请参阅 <a href="/docs/usage.html">使用说明</a> 了解如何使用桌面客户端连接和管理图纸文件。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="DWG-预览报错「dwg2dxf-not-available」？"><a href="#DWG-预览报错「dwg2dxf-not-available」？" class="headerlink" title="DWG 预览报错「dwg2dxf not available」？"></a>DWG 预览报错「dwg2dxf not available」？</h3><p>说明容器内没有 <code>dwg2dxf</code>（本机裸跑二进制时常见，Docker 镜像会从源码编译 libredwg）。请用 Docker 部署；转换只在首次预览时执行并缓存到 <code>CONFIG_DIR/dxf_cache</code>。</p>
+<h3 id="如何备份？"><a href="#如何备份？" class="headerlink" title="如何备份？"></a>如何备份？</h3><p>备份图纸拷贝 <code>data/</code> 目录（library 真实目录 + blobs 归档）即可；建议一并备份 <code>pgdata/</code> 卷（目录结构、版本备注等元数据，丢了不影响图纸文件本身）。</p>
+<h3 id="数据库连不上？"><a href="#数据库连不上？" class="headerlink" title="数据库连不上？"></a>数据库连不上？</h3><p>确认 compose 中 <code>db</code> 容器先启动且健康（<code>pg_isready</code>），<code>DATABASE_URL</code> 的用户&#x2F;密码&#x2F;库名与 <code>POSTGRES_*</code> 一致。</p>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">donniemarc</div><div class="author-info-description">让你的模型和设计文件不再散落各处。支持 DWG/DXF/STEP/IGES/STL/PDF 预览与版本管理。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">0</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/donniemarc/plotvault-PDM" target="_blank" title=""><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"></div></div><div class="card-widget card-archives"></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">0</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-08-26T08:59:36.156Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By donniemarc</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
