@@ -12,12 +12,12 @@
     // Insert after site title
     siteTitle.parentNode.insertBefore(subtitleContainer, siteTitle.nextSibling);
     
-    // Typing effect
+    // Typing effect - personal content
     const strings = [
-      '轻量级自建图纸文档管理系统',
-      '支持 DWG/DXF/STEP/IGES/STL/PDF 预览',
-      'Docker Compose 一键部署',
-      '3D打印设计项目分享'
+      '3D打印爱好者',
+      '开源项目折腾中',
+      '记录技术与创意',
+      '欢迎来到我的主页'
     ];
     let stringIndex = 0;
     let charIndex = 0;
