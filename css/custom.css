@@ -11,27 +11,32 @@
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 10;
+  width: 100%;
 }
 
 #site-title {
-  font-size: 3rem;
-  color: white;
+  font-size: 3rem !important;
+  color: white !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;
 }
 
 #site-subtitle {
-  font-size: 1.5rem;
-  color: white;
+  font-size: 1.5rem !important;
+  color: white !important;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Typing effect container */
 #subtitle {
-  color: white;
-  font-size: 1.2rem;
+  color: white !important;
+  font-size: 1.2rem !important;
 }
 
 #typed {
-  color: white;
+  color: white !important;
+}
+
+.typed-cursor {
+  color: white !important;
 }
