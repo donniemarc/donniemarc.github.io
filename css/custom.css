@@ -298,6 +298,7 @@ body {
   justify-content: center;
   gap: 8px 24px;
   margin-top: 0;
+  margin-bottom: 0;
   font-size: 0.9em;
   color: var(--card-meta);
 }
