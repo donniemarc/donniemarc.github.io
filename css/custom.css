@@ -35,7 +35,7 @@ body::before {
 
 /* Semi-transparent frosted glass cards */
 .card-widget,
-.layout > div:first-child,
+.layout > div:first-child:not(.nc),
 .recent-post-item {
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
@@ -43,7 +43,7 @@ body::before {
 }
 
 [data-theme='dark'] .card-widget,
-[data-theme='dark'] .layout > div:first-child,
+[data-theme='dark'] .layout > div:first-child:not(.nc),
 [data-theme='dark'] .recent-post-item {
   border-color: rgba(255, 255, 255, 0.12);
 }
@@ -54,12 +54,29 @@ body::before {
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* ---------- Full screen banner on home page ---------- */
+/* ---------- Home page header ---------- */
 #page-header {
   height: 100vh !important;
   min-height: 100vh !important;
 }
 
+/* Center the home site info (title + typing quote) */
+#page-header.full_page #site-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+/* Hide the big site title on home (only the typing quote stays) */
+#page-header.full_page #site-info #site-title {
+  display: none;
+}
+
+/* Center the page title on inner pages */
 #page-header #page-site-info {
   position: absolute;
   top: 50%;
@@ -68,11 +85,6 @@ body::before {
   text-align: center;
   z-index: 10;
   width: 100%;
-}
-
-/* Hide the big page title ("首页") on home page */
-.type-home #page-site-info h1#site-title {
-  display: none;
 }
 
 /* Profound quote typing effect */
@@ -87,84 +99,20 @@ body::before {
   min-height: 2.6em;
 }
 
-.home-quote-mark {
+#site-info #site-subtitle::before {
+  content: '“';
   font-family: Georgia, serif;
   font-size: 2rem;
   color: rgba(255, 255, 255, 0.9);
+  margin-right: 6px;
   vertical-align: text-top;
 }
 
-.home-quote-open {
-  margin-right: 6px;
-}
-
-.home-quote-close {
+#site-info #site-subtitle::after {
+  content: '”';
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.9);
   margin-left: 6px;
   vertical-align: text-bottom;
-}
-
-/* ---------- Latest posts section (left of profile card) ---------- */
-.home-recent-posts {
-  min-height: 200px;
-}
-
-.home-recent-posts-title {
-  margin: 0 0 18px;
-  font-size: 1.5em;
-  font-weight: 600;
-  color: var(--text-highlight-color);
-  border-bottom: 1px solid var(--light-grey);
-  padding-bottom: 10px;
-}
-
-.home-recent-posts-title i {
-  color: var(--theme-color, #49b1f5);
-  margin-right: 8px;
-}
-
-.home-recent-posts-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.home-recent-posts-list li {
-  margin-bottom: 12px;
-  transition: all 0.3s;
-}
-
-.home-recent-posts-list li:hover {
-  transform: translateX(6px);
-}
-
-.home-recent-post-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  color: var(--font-color);
-  text-decoration: none;
-  font-size: 1.05em;
-}
-
-.home-recent-post-link:hover {
-  color: var(--theme-color, #49b1f5);
-}
-
-.home-recent-post-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.home-recent-post-date {
-  flex-shrink: 0;
-  color: var(--card-meta);
-  font-size: 0.85em;
-}
-
-.home-recent-posts-empty {
-  color: var(--card-meta);
-  text-align: center;
-  padding: 60px 0;
 }

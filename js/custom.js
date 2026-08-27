@@ -1,29 +1,10 @@
 // Custom home page effects
 (function() {
-  const isHome = () => !!document.querySelector('#page-site-info');
-
-  // Typing effect for the profound quote on home page
+  // Typing effect for the profound quote on the home page banner
   function initTyping() {
-    const siteInfo = document.querySelector('#page-site-info');
-    if (!siteInfo || document.querySelector('.home-quote')) return;
-
-    const quoteWrap = document.createElement('div');
-    quoteWrap.id = 'site-subtitle';
-    quoteWrap.className = 'home-quote';
-
-    const prefix = document.createElement('span');
-    prefix.className = 'home-quote-mark home-quote-open';
-    prefix.textContent = '“';
-    const text = document.createElement('span');
-    text.className = 'home-quote-text';
-    const suffix = document.createElement('span');
-    suffix.className = 'home-quote-mark home-quote-close';
-    suffix.textContent = '”';
-
-    quoteWrap.appendChild(prefix);
-    quoteWrap.appendChild(text);
-    quoteWrap.appendChild(suffix);
-    siteInfo.appendChild(quoteWrap);
+    const sub = document.querySelector('#site-info #subtitle');
+    if (!sub || sub.dataset.typingReady) return;
+    sub.dataset.typingReady = '1';
 
     const strings = [
       '把脑海中的构想，一点点打印成现实，是创造者独有的浪漫。',
@@ -41,10 +22,10 @@
       const current = strings[stringIndex];
 
       if (isDeleting) {
-        text.textContent = current.substring(0, charIndex - 1);
+        sub.textContent = current.substring(0, charIndex - 1);
         charIndex--;
       } else {
-        text.textContent = current.substring(0, charIndex + 1);
+        sub.textContent = current.substring(0, charIndex + 1);
         charIndex++;
       }
 
@@ -65,68 +46,9 @@
     setTimeout(type, 1200);
   }
 
-  // Render the latest posts into the blank area left of the profile card
-  function initRecentPosts() {
-    const container = document.querySelector('.type-home #article-container');
-    if (!container) return;
-
-    fetch('/recent-posts.json', { cache: 'no-store' })
-      .then(res => res.json())
-      .then(data => {
-        const posts = (data && data.posts) || [];
-
-        const section = document.createElement('section');
-        section.className = 'home-recent-posts';
-
-        const header = document.createElement('h2');
-        header.className = 'home-recent-posts-title';
-        header.innerHTML = '<i class="fas fa-fire"></i> 最新文章';
-        section.appendChild(header);
-
-        if (!posts.length) {
-          const empty = document.createElement('p');
-          empty.className = 'home-recent-posts-empty';
-          empty.textContent = '还没有文章，敬请期待……';
-          section.appendChild(empty);
-        } else {
-          const list = document.createElement('ul');
-          list.className = 'home-recent-posts-list';
-          posts.forEach(post => {
-            const li = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = post.path;
-            link.className = 'home-recent-post-link';
-            link.innerHTML =
-              '<span class="home-recent-post-title">' + escapeHtml(post.title) + '</span>' +
-              '<span class="home-recent-post-date">' + escapeHtml(post.date) + '</span>';
-            li.appendChild(link);
-            list.appendChild(li);
-          });
-          section.appendChild(list);
-        }
-
-        container.appendChild(section);
-      })
-      .catch(() => {
-        // ignore fetch errors silently
-      });
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = String(str || '');
-    return div.innerHTML;
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      if (isHome()) {
-        initTyping();
-        initRecentPosts();
-      }
-    });
-  } else if (isHome()) {
+    document.addEventListener('DOMContentLoaded', initTyping);
+  } else {
     initTyping();
-    initRecentPosts();
   }
 })();
