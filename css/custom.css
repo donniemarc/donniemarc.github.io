@@ -1,10 +1,66 @@
-/* Force full screen banner on home page */
+/* ==========================================
+   Custom styles (loaded after theme css)
+   ========================================== */
+
+/* ---------- Frosted glass global ---------- */
+:root {
+  --card-bg: rgba(255, 255, 255, 0.55);
+  --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.24);
+}
+
+[data-theme='dark'] {
+  --card-bg: rgba(18, 18, 18, 0.55);
+}
+
+/* Fixed background image so the glass has something to blur */
+body {
+  background: url('/images/banner.webp') center center / cover no-repeat fixed;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 10, 0.42);
+  z-index: -1;
+}
+
+[data-theme='dark'] body::before {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* Semi-transparent frosted glass cards */
+.card-widget,
+.layout > div:first-child,
+.recent-post-item {
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+[data-theme='dark'] .card-widget,
+[data-theme='dark'] .layout > div:first-child,
+[data-theme='dark'] .recent-post-item {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Frosted nav bar */
+#nav {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ---------- Full screen banner on home page ---------- */
 #page-header {
   height: 100vh !important;
   min-height: 100vh !important;
 }
 
-#page-site-info {
+#page-header #page-site-info {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -14,29 +70,101 @@
   width: 100%;
 }
 
-#site-title {
-  font-size: 3rem !important;
-  color: white !important;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  margin-bottom: 1rem;
+/* Hide the big page title ("首页") on home page */
+.type-home #page-site-info h1#site-title {
+  display: none;
 }
 
+/* Profound quote typing effect */
 #site-subtitle {
   font-size: 1.5rem !important;
   color: white !important;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6) !important;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  line-height: 1.8;
+  min-height: 2.6em;
 }
 
-/* Typing effect container */
-#subtitle {
-  color: white !important;
-  font-size: 1.2rem !important;
+.home-quote-mark {
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+  vertical-align: text-top;
 }
 
-#typed {
-  color: white !important;
+.home-quote-open {
+  margin-right: 6px;
 }
 
-.typed-cursor {
-  color: white !important;
+.home-quote-close {
+  margin-left: 6px;
+  vertical-align: text-bottom;
+}
+
+/* ---------- Latest posts section (left of profile card) ---------- */
+.home-recent-posts {
+  min-height: 200px;
+}
+
+.home-recent-posts-title {
+  margin: 0 0 18px;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: var(--text-highlight-color);
+  border-bottom: 1px solid var(--light-grey);
+  padding-bottom: 10px;
+}
+
+.home-recent-posts-title i {
+  color: var(--theme-color, #49b1f5);
+  margin-right: 8px;
+}
+
+.home-recent-posts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.home-recent-posts-list li {
+  margin-bottom: 12px;
+  transition: all 0.3s;
+}
+
+.home-recent-posts-list li:hover {
+  transform: translateX(6px);
+}
+
+.home-recent-post-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  color: var(--font-color);
+  text-decoration: none;
+  font-size: 1.05em;
+}
+
+.home-recent-post-link:hover {
+  color: var(--theme-color, #49b1f5);
+}
+
+.home-recent-post-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-recent-post-date {
+  flex-shrink: 0;
+  color: var(--card-meta);
+  font-size: 0.85em;
+}
+
+.home-recent-posts-empty {
+  color: var(--card-meta);
+  text-align: center;
+  padding: 60px 0;
 }
