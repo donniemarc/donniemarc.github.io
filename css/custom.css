@@ -2,15 +2,46 @@
    Custom styles (loaded after theme css)
    ========================================== */
 
-/* ---------- Frosted glass global ---------- */
+/* ---------- Dark smoked glass global (matches black bg video) ---------- */
 :root {
-  --card-bg: rgba(255, 255, 255, 0.3);
-  --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-  --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.24);
+  /* Glass surfaces */
+  --card-bg: rgba(10, 10, 14, 0.55);
+  --glass-bg: rgba(10, 10, 14, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+
+  /* Light text on dark glass */
+  --font-color: rgba(255, 255, 255, 0.78);
+  --text-highlight-color: rgba(255, 255, 255, 0.92);
+  --white: rgba(255, 255, 255, 0.92);
+  --light-grey: rgba(255, 255, 255, 0.5);
+  --dark-grey: rgba(255, 255, 255, 0.28);
+  --card-meta: rgba(235, 235, 240, 0.62);
+  --card-text-color: rgba(235, 235, 240, 0.85);
+  --blockquote-color: rgba(255, 255, 255, 0.68);
+  --blockquote-bg: rgba(255, 255, 255, 0.06);
+  --toc-link-color: rgba(255, 255, 255, 0.6);
+  --hr-border: rgba(255, 255, 255, 0.16);
+  --hr-before-color: rgba(255, 255, 255, 0.4);
+  --mark-bg: rgba(255, 255, 255, 0.18);
+  --scrollbar-color: rgba(255, 255, 255, 0.35);
+
+  /* Panels & widgets that use opaque vars in light mode */
+  --global-bg: transparent;
+  --sidebar-bg: transparent;
+  --sidebar-menu-bg: rgba(255, 255, 255, 0.08);
+  --search-bg: rgba(16, 16, 20, 0.95);
+  --search-input-color: rgba(255, 255, 255, 0.8);
+  --search-a-color: rgba(255, 255, 255, 0.8);
+  --zoom-bg: rgba(10, 10, 14, 0.85);
+
+  /* Buttons */
+  --btn-hover-color: #ff7242;
 }
 
 [data-theme='dark'] {
-  --card-bg: rgba(18, 18, 18, 0.3);
+  --card-bg: rgba(10, 10, 14, 0.55);
 }
 
 /* Fixed background image so the glass has something to blur
@@ -38,25 +69,32 @@ body {
   background-color: transparent !important;
 }
 
-/* Semi-transparent frosted glass cards */
+/* Semi-transparent dark smoked glass cards */
 .card-widget,
 .layout > div:first-child:not(.nc),
 .recent-post-item {
+  background: var(--glass-bg);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--glass-border);
 }
 
 [data-theme='dark'] .card-widget,
 [data-theme='dark'] .layout > div:first-child:not(.nc),
 [data-theme='dark'] .recent-post-item {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Frosted nav bar */
 #nav {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+}
+
+/* Nav bar when scrolled / fixed / on pages without top img */
+#page-header.nav-fixed > #nav,
+#page-header.not-top-img > #nav {
+  background: rgba(10, 10, 14, 0.55);
 }
 
 /* ---------- Home page header ---------- */
@@ -123,15 +161,17 @@ body {
 }
 
 .post-card {
-  background: var(--card-bg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--glass-border);
 }
 
 [data-theme='dark'] .post-card {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .post-card:hover {
@@ -240,8 +280,10 @@ body {
 #body-wrap.type-blog #page .recent-post-item {
   display: flex;
   align-items: center;
-  background: var(--card-bg);
-  border: var(--style-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--card-box-shadow);
@@ -308,6 +350,17 @@ body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ---------- Footer text ---------- */
+#footer,
+#footer a,
+#footer .footer-other-left {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+#footer a:hover {
+  color: #ff7242;
 }
 
 /* ---------- Footer webinfo ---------- */
