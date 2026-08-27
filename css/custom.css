@@ -13,10 +13,29 @@
   --card-bg: rgba(18, 18, 18, 0.3);
 }
 
-/* Fixed background image so the glass has something to blur */
+/* Fixed background image so the glass has something to blur
+   (bg video overlays it once loaded; this is the loading fallback) */
 body {
   background: url('/images/riluo.jpg') center center / cover no-repeat fixed;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro SC', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+/* ---------- Full-screen background video ---------- */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Home header must stay transparent so the video shows through */
+#page-header.full_page {
+  background-image: none !important;
+  background-color: transparent !important;
 }
 
 /* Semi-transparent frosted glass cards */

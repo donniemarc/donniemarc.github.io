@@ -59,3 +59,28 @@
     initTyping();
   }
 })();
+
+// Full-screen looping background video
+(function() {
+  function initBgVideo() {
+    if (document.getElementById('bg-video')) return;
+    const v = document.createElement('video');
+    v.id = 'bg-video';
+    v.setAttribute('autoplay', '');
+    v.setAttribute('loop', '');
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute('playsinline', '');
+    v.setAttribute('preload', 'auto');
+    v.src = '/images/bg1.mp4';
+    document.body.appendChild(v);
+    const p = v.play();
+    if (p && p.catch) p.catch(function() {});
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBgVideo);
+  } else {
+    initBgVideo();
+  }
+})();
