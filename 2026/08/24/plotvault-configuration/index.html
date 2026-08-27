@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>PlotVault PDM 配置说明 | don's blog</title><meta name="author" content="donniemarc"><meta name="copyright" content="donniemarc"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文档介绍 PlotVault PDM 的各项配置参数。 环境变量核心配置   变量名 默认值 说明    DATA_DIR &#x2F;data 图纸数据目录（library 真实目录 + blobs 版本归档），主机上可直接浏览   CONFIG_DIR &#x2F;config 软件缓存目录（dxf_cache + tmp）   DATABASE_URL postgres:&#x2F;&#x2F;postgres:postgres">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PlotVault PDM 配置说明">
+<meta property="og:url" content="https://625021125.xyz/2026/08/24/plotvault-configuration/index.html">
+<meta property="og:site_name" content="don&#39;s blog">
+<meta property="og:description" content="本文档介绍 PlotVault PDM 的各项配置参数。 环境变量核心配置   变量名 默认值 说明    DATA_DIR &#x2F;data 图纸数据目录（library 真实目录 + blobs 版本归档），主机上可直接浏览   CONFIG_DIR &#x2F;config 软件缓存目录（dxf_cache + tmp）   DATABASE_URL postgres:&#x2F;&#x2F;postgres:postgres">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://625021125.xyz/images/banner.webp">
+<meta property="article:published_time" content="2026-08-24T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-27T00:27:40.822Z">
+<meta property="article:author" content="donniemarc">
+<meta property="article:tag" content="PlotVault">
+<meta property="article:tag" content="配置">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://625021125.xyz/images/banner.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PlotVault PDM 配置说明",
+  "url": "https://625021125.xyz/2026/08/24/plotvault-configuration/",
+  "image": "https://625021125.xyz/images/banner.webp",
+  "datePublished": "2026-08-24T04:00:00.000Z",
+  "dateModified": "2026-08-27T00:27:40.822Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "donniemarc",
+      "url": "https://625021125.xyz"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://625021125.xyz/2026/08/24/plotvault-configuration/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: 
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PlotVault PDM 配置说明',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3d%E6%89%93%E5%8D%B0/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/banner.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">don's blog</span></a><a class="nav-page-title" href="/"><span class="site-name">PlotVault PDM 配置说明</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3d%E6%89%93%E5%8D%B0/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">PlotVault PDM 配置说明</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-24T04:00:00.000Z" title="发表于 2026-08-24 12:00:00">2026-08-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-27T00:27:40.822Z" title="更新于 2026-08-27 08:27:40">2026-08-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/plotvault/">PlotVault</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文档介绍 PlotVault PDM 的各项配置参数。</p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="核心配置"><a href="#核心配置" class="headerlink" title="核心配置"></a>核心配置</h3><table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DATA_DIR</code></td>
+<td><code>/data</code></td>
+<td>图纸数据目录（library 真实目录 + blobs 版本归档），主机上可直接浏览</td>
+</tr>
+<tr>
+<td><code>CONFIG_DIR</code></td>
+<td><code>/config</code></td>
+<td>软件缓存目录（dxf_cache + tmp）</td>
+</tr>
+<tr>
+<td><code>DATABASE_URL</code></td>
+<td><code>postgres://postgres:postgres@localhost:5432/plotvault_pdm</code></td>
+<td>PostgreSQL 连接串（compose 里指向 <code>db</code> 容器）</td>
+</tr>
+<tr>
+<td><code>BIND</code></td>
+<td><code>0.0.0.0:8642</code></td>
+<td>监听地址</td>
+</tr>
+<tr>
+<td><code>API_TOKEN</code></td>
+<td>空</td>
+<td>设置后所有 API 需 <code>Authorization: Bearer &lt;token&gt;</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>即使是局域网私有环境，也建议设置 <code>API_TOKEN</code>。</p>
+</blockquote>
+<h3 id="Docker-Compose-配置示例"><a href="#Docker-Compose-配置示例" class="headerlink" title="Docker Compose 配置示例"></a>Docker Compose 配置示例</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:18</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">plotvault_pdm</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">postgres</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">&lt;数据库密码&gt;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;PGDATA_HOST_PATH&gt;:/var/lib/postgresql/data</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;pg_isready -U postgres&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">5s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">5s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">5</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">plotvault-pdm:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&lt;DOCKERHUB_USER&gt;/plotvault-pdm-server:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;&lt;HOST_PORT&gt;:8642&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DATABASE_URL:</span> <span class="string">postgres://postgres:&lt;数据库密码&gt;@db:5432/plotvault_pdm</span></span><br><span class="line">      <span class="attr">API_TOKEN:</span> <span class="string">&lt;API_TOKEN&gt;</span></span><br><span class="line">      <span class="attr">DATA_DIR:</span> <span class="string">/data</span></span><br><span class="line">      <span class="attr">CONFIG_DIR:</span> <span class="string">/config</span></span><br><span class="line">      <span class="attr">BIND:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:8642</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;DATA_HOST_PATH&gt;:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;CONFIG_HOST_PATH&gt;:/config</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">converter:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&lt;DOCKERHUB_USER&gt;/plotvault-pdm-converter:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:8000&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="数据目录结构"><a href="#数据目录结构" class="headerlink" title="数据目录结构"></a>数据目录结构</h2><h3 id="DATA-DIR（图纸数据）"><a href="#DATA-DIR（图纸数据）" class="headerlink" title="DATA_DIR（图纸数据）"></a>DATA_DIR（图纸数据）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">data/</span><br><span class="line">├── library/          # 真实目录结构，与客户端看到的文件夹树一致</span><br><span class="line">│   ├── 项目A/</span><br><span class="line">│   │   ├── 零件1.step</span><br><span class="line">│   │   └── 零件1.step</span><br><span class="line">│   └── 项目B/</span><br><span class="line">│       └── 图纸1.dwg</span><br><span class="line">└── blobs/            # 版本归档</span><br><span class="line">    ├── v1/</span><br><span class="line">    │   └── &lt;hash&gt;</span><br><span class="line">    └── v2/</span><br><span class="line">        └── &lt;hash&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="CONFIG-DIR（软件缓存）"><a href="#CONFIG-DIR（软件缓存）" class="headerlink" title="CONFIG_DIR（软件缓存）"></a>CONFIG_DIR（软件缓存）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config/</span><br><span class="line">├── dxf_cache/        # DWG 转 DXF 的缓存</span><br><span class="line">└── tmp/              # 临时文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="安全建议"><a href="#安全建议" class="headerlink" title="安全建议"></a>安全建议</h2><h3 id="1-设置-API-Token"><a href="#1-设置-API-Token" class="headerlink" title="1. 设置 API Token"></a>1. 设置 API Token</h3><p>即使在局域网环境，也建议设置 API Token：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成一个随机 token</span></span><br><span class="line">openssl rand -hex 32</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将生成的 token 设置到环境变量</span></span><br><span class="line">API_TOKEN=your_generated_token_here</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-HTTPS"><a href="#2-使用-HTTPS" class="headerlink" title="2. 使用 HTTPS"></a>2. 使用 HTTPS</h3><p>如果暴露到公网，建议使用反向代理（如 Nginx）配置 HTTPS：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span> plotvault.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /path/to/cert.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /path/to/key.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8642;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-限制访问"><a href="#3-限制访问" class="headerlink" title="3. 限制访问"></a>3. 限制访问</h3><p>可以通过防火墙规则限制只允许特定 IP 访问：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只允许 192.168.1.0/24 网段访问</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 8642 -s 192.168.1.0/24 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 8642 -j DROP</span><br></pre></td></tr></table></figure>
+
+<h2 id="性能调优"><a href="#性能调优" class="headerlink" title="性能调优"></a>性能调优</h2><h3 id="PostgreSQL-优化"><a href="#PostgreSQL-优化" class="headerlink" title="PostgreSQL 优化"></a>PostgreSQL 优化</h3><p>对于大量文件的场景，可以调整 PostgreSQL 配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># postgresql.conf</span><br><span class="line">shared_buffers = 256MB</span><br><span class="line">effective_cache_size = 1GB</span><br><span class="line">work_mem = 16MB</span><br><span class="line">maintenance_work_mem = 128MB</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件存储优化"><a href="#文件存储优化" class="headerlink" title="文件存储优化"></a>文件存储优化</h3><ul>
+<li>将 <code>DATA_DIR</code> 放在 SSD 上可以提高文件读写速度</li>
+<li>使用 RAID 配置可以提高数据安全性</li>
+</ul>
+<h2 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h2><h3 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份图纸数据</span></span><br><span class="line"><span class="built_in">cp</span> -r /path/to/data /backup/data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份数据库</span></span><br><span class="line">docker <span class="built_in">exec</span> -t db pg_dump -U postgres plotvault_pdm &gt; /backup/plotvault_pdm.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 恢复图纸数据</span></span><br><span class="line"><span class="built_in">cp</span> -r /backup/data /path/to/data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复数据库</span></span><br><span class="line"><span class="built_in">cat</span> /backup/plotvault_pdm.sql | docker <span class="built_in">exec</span> -i db psql -U postgres plotvault_pdm</span><br></pre></td></tr></table></figure>
+
+<h3 id="清空重建"><a href="#清空重建" class="headerlink" title="清空重建"></a>清空重建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除配置和数据库（保留图纸文件）</span></span><br><span class="line"><span class="built_in">rm</span> -rf /path/to/config</span><br><span class="line">docker <span class="built_in">exec</span> -t db dropdb -U postgres plotvault_pdm</span><br><span class="line">docker <span class="built_in">exec</span> -t db createdb -U postgres plotvault_pdm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连图纸一起清空</span></span><br><span class="line"><span class="built_in">rm</span> -rf /path/to/data</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://625021125.xyz">donniemarc</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://625021125.xyz/2026/08/24/plotvault-configuration/">https://625021125.xyz/2026/08/24/plotvault-configuration/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://625021125.xyz" target="_blank">don's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PlotVault/">PlotVault</a><a class="post-meta__tags" href="/tags/%E9%85%8D%E7%BD%AE/">配置</a></div><div class="post-share"><div class="social-share" data-image="/images/banner.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">PlotVault PDM 使用说明</div></div><div class="info-2"><div class="info-item-1">本文档介绍如何使用 PlotVault PDM 桌面客户端来管理你的图纸文件。 客户端安装Windows 客户端构建在一台 Windows PC 上构建一次即可（安装包可分发给其他机器）。 前置要求：  Rust（MSVC 工具链 + Visual Studio Build Tools C++ 工作负载） Node.js 18+ WebView2 运行时（Win10&#x2F;11 一般自带）  构建步骤： 123cd clientnpm installnpm run tauri build  产物位于 client/src-tauri/target/release/bundle/。 开发调试： 12cd clientnpm run tauri dev  首次连接 启动客户端 点击右上角 设置 按钮 填入服务器地址：http://&lt;主机IP&gt;:8642 填入 API Token（与服务端配置的 token 一致） 点击 测试连接 确认连接成功 点击 保存  基础操作文件夹树左侧显示文件夹树结构，点击文件夹可展开或收起子目录。 文件列表右侧显示当前文件夹中的文件列表，包...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-26</div><div class="info-item-2">PlotVault PDM 安装部署指南</div></div><div class="info-2"><div class="info-item-1">本文档介绍如何部署 PlotVault PDM 后端服务。PlotVault 支持多种部署方式，推荐使用 Docker Compose 进行一键部署。 前置要求 Docker 和 Docker Compose 至少 1GB 的磁盘空间 网络连接（用于拉取镜像）  方式 A：Docker Compose（推荐）这是最简单的部署方式，只需几步即可完成。 步骤 1：准备配置文件从仓库复制 docker-compose.yml 文件到你的部署目录： 12git clone https://github.com/donniemarc/plotvault-PDM.gitcd plotvault-PDM  步骤 2：配置环境变量编辑 docker-compose.yml，替换所有 &lt;...&gt; 占位符：    占位符 说明 示例值    &lt;DOCKERHUB_USER&gt; Docker Hub 用户名 donniemarc   &lt;数据库密码&gt; PostgreSQL 数据库密码 your_secure_password   &lt;API_TOKEN&gt; 客户...</div></div></div></a><a class="pagination-related" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-27</div><div class="info-item-2">PlotVault PDM 文档中心</div></div><div class="info-2"><div class="info-item-1">欢迎来到 PlotVault PDM 文档中心。在这里你可以找到关于安装、使用和配置 PlotVault 的详细信息。 目录安装与部署 安装部署指南 - 了解如何部署 PlotVault 后端服务  使用指南 使用说明 - 了解如何使用桌面客户端管理图纸文件  配置参考 配置说明 - 了解如何配置 PlotVault 的各项参数  更新记录 更新日志 - 查看 PlotVault 的版本更新记录  快速链接 GitHub 仓库 问题反馈 Docker Hub (搜索 plotvault-pdm)  技术支持如果你在使用过程中遇到问题，可以通过以下方式获取帮助：  查阅本文档中的相关章节 在 GitHub Issues 中搜索或提交问题 参考项目 README 中的 FAQ 部分  </div></div></div></a><a class="pagination-related" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-25</div><div class="info-item-2">PlotVault PDM 使用说明</div></div><div class="info-2"><div class="info-item-1">本文档介绍如何使用 PlotVault PDM 桌面客户端来管理你的图纸文件。 客户端安装Windows 客户端构建在一台 Windows PC 上构建一次即可（安装包可分发给其他机器）。 前置要求：  Rust（MSVC 工具链 + Visual Studio Build Tools C++ 工作负载） Node.js 18+ WebView2 运行时（Win10&#x2F;11 一般自带）  构建步骤： 123cd clientnpm installnpm run tauri build  产物位于 client/src-tauri/target/release/bundle/。 开发调试： 12cd clientnpm run tauri dev  首次连接 启动客户端 点击右上角 设置 按钮 填入服务器地址：http://&lt;主机IP&gt;:8642 填入 API Token（与服务端配置的 token 一致） 点击 测试连接 确认连接成功 点击 保存  基础操作文件夹树左侧显示文件夹树结构，点击文件夹可展开或收起子目录。 文件列表右侧显示当前文件夹中的文件列表，包...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">donniemarc</div><div class="author-info-description">3D打印爱好者 | 开源折腾者</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/donniemarc"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/donniemarc" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人网站！这里记录我的3D打印设计、开源项目和技术笔记。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">核心配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-Compose-%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.</span> <span class="toc-text">Docker Compose 配置示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">数据目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DATA-DIR%EF%BC%88%E5%9B%BE%E7%BA%B8%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">DATA_DIR（图纸数据）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CONFIG-DIR%EF%BC%88%E8%BD%AF%E4%BB%B6%E7%BC%93%E5%AD%98%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">CONFIG_DIR（软件缓存）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">3.</span> <span class="toc-text">安全建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%BE%E7%BD%AE-API-Token"><span class="toc-number">3.1.</span> <span class="toc-text">1. 设置 API Token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-HTTPS"><span class="toc-number">3.2.</span> <span class="toc-text">2. 使用 HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%99%90%E5%88%B6%E8%AE%BF%E9%97%AE"><span class="toc-number">3.3.</span> <span class="toc-text">3. 限制访问</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98"><span class="toc-number">4.</span> <span class="toc-text">性能调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PostgreSQL-%E4%BC%98%E5%8C%96"><span class="toc-number">4.1.</span> <span class="toc-text">PostgreSQL 优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%BC%98%E5%8C%96"><span class="toc-number">4.2.</span> <span class="toc-text">文件存储优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-number">5.</span> <span class="toc-text">备份与恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD"><span class="toc-number">5.1.</span> <span class="toc-text">备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D"><span class="toc-number">5.2.</span> <span class="toc-text">恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E7%A9%BA%E9%87%8D%E5%BB%BA"><span class="toc-number">5.3.</span> <span class="toc-text">清空重建</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 文档中心"/></a><div class="content"><a class="title" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心">PlotVault PDM 文档中心</a><time datetime="2026-08-27T12:00:00.000Z" title="发表于 2026-08-27 20:00:00">2026-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 安装部署指南"/></a><div class="content"><a class="title" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南">PlotVault PDM 安装部署指南</a><time datetime="2026-08-26T04:00:00.000Z" title="发表于 2026-08-26 12:00:00">2026-08-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 使用说明"/></a><div class="content"><a class="title" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明">PlotVault PDM 使用说明</a><time datetime="2026-08-25T04:00:00.000Z" title="发表于 2026-08-25 12:00:00">2026-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 配置说明"/></a><div class="content"><a class="title" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明">PlotVault PDM 配置说明</a><time datetime="2026-08-24T04:00:00.000Z" title="发表于 2026-08-24 12:00:00">2026-08-24</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By donniemarc</span></div><div class="footer_custom_text">3D打印 | 开源项目 | 技术笔记</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/custom.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
