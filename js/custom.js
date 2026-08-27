@@ -11,7 +11,7 @@
     const labTitle = document.createElement('div');
     labTitle.className = 'home-lab-title';
     labTitle.textContent = 'Don·Lab';
-    siteInfo.insertBefore(labTitle, sub);
+    siteInfo.insertBefore(labTitle, document.querySelector('#site-info #site-subtitle'));
 
     const strings = [
       '把脑海中的构想，一点点打印成现实，是创造者独有的浪漫。',
