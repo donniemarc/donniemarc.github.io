@@ -4,13 +4,13 @@
 
 /* ---------- Frosted glass global ---------- */
 :root {
-  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-bg: rgba(255, 255, 255, 0.5);
   --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.24);
 }
 
 [data-theme='dark'] {
-  --card-bg: rgba(18, 18, 18, 0.78);
+  --card-bg: rgba(18, 18, 18, 0.5);
 }
 
 /* Fixed background image so the glass has something to blur */
