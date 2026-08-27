@@ -19,21 +19,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro SC', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(10, 10, 10, 0.42);
-  z-index: -1;
-}
-
-[data-theme='dark'] body::before {
-  background: rgba(0, 0, 0, 0.55);
-}
-
 /* Semi-transparent frosted glass cards */
 .card-widget,
 .layout > div:first-child:not(.nc),
@@ -218,19 +203,14 @@ body::before {
   padding: 60px 0;
 }
 
-/* ---------- Home page cards: no cover images (text only) ---------- */
-#page-header.full_page ~ main #recent-posts .post_cover {
-  display: none;
-}
-
-#page-header.full_page ~ main #recent-posts .recent-post-item {
-  height: auto !important;
-  min-height: 8em;
-}
-
-#page-header.full_page ~ main #recent-posts .recent-post-info {
-  width: 100% !important;
-  padding: 30px 40px !important;
+/* ---------- Blog page: strip the #page card so cards match category pages ---------- */
+#body-wrap.type-blog #page {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
 }
 
 /* ---------- Footer webinfo ---------- */
