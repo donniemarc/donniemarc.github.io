@@ -66,6 +66,7 @@
     if (document.getElementById('bg-video')) return;
     const v = document.createElement('video');
     v.id = 'bg-video';
+    v.poster = '/images/bbg1.jpg';
     v.setAttribute('autoplay', '');
     v.setAttribute('loop', '');
     v.muted = true;
