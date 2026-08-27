@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>简易车载半导体小冰箱 | Don·Lab</title><meta name="author" content="donniemarc"><meta name="copyright" content="donniemarc"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="自制12L车载半导体制冷箱：3D打印全PETG外壳 + 水冷散热方案 折腾了几天的半导体小冰箱终于完成组装，从内胆选型、结构设计到3D打印外壳、水路电路搭建全部自主完成。目前整机刚装配完毕，还没正式通电测试，先把整个项目的设计思路、物料清单和组装过程完整记录下来，先上效果图。   项目背景与目标夏天考虑天气热，开车出门想随时喝到凉的，一台小冰箱都是刚需。市售车载冰箱价格偏高(主要是想自己动手)，刚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简易车载半导体小冰箱">
+<meta property="og:url" content="https://625021125.xyz/2026/06/26/car-mini-fridge/index.html">
+<meta property="og:site_name" content="Don·Lab">
+<meta property="og:description" content="自制12L车载半导体制冷箱：3D打印全PETG外壳 + 水冷散热方案 折腾了几天的半导体小冰箱终于完成组装，从内胆选型、结构设计到3D打印外壳、水路电路搭建全部自主完成。目前整机刚装配完毕，还没正式通电测试，先把整个项目的设计思路、物料清单和组装过程完整记录下来，先上效果图。   项目背景与目标夏天考虑天气热，开车出门想随时喝到凉的，一台小冰箱都是刚需。市售车载冰箱价格偏高(主要是想自己动手)，刚">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://625021125.xyz/images/banner.webp">
+<meta property="article:published_time" content="2026-06-26T01:21:51.000Z">
+<meta property="article:modified_time" content="2026-08-27T00:54:33.792Z">
+<meta property="article:author" content="donniemarc">
+<meta property="article:tag" content="3d打印">
+<meta property="article:tag" content="自研设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://625021125.xyz/images/banner.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "简易车载半导体小冰箱",
+  "url": "https://625021125.xyz/2026/06/26/car-mini-fridge/",
+  "image": "https://625021125.xyz/images/banner.webp",
+  "datePublished": "2026-06-26T01:21:51.000Z",
+  "dateModified": "2026-08-27T00:54:33.792Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "donniemarc",
+      "url": "https://625021125.xyz"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://625021125.xyz/2026/06/26/car-mini-fridge/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: 
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '简易车载半导体小冰箱',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-pen-nib"></i><span> Blog</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3dprint/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/banner.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Don·Lab</span></a><a class="nav-page-title" href="/"><span class="site-name">简易车载半导体小冰箱</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-pen-nib"></i><span> Blog</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3dprint/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">简易车载半导体小冰箱</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-26T01:21:51.000Z" title="发表于 2026-06-26 09:21:51">2026-06-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-27T00:54:33.792Z" title="更新于 2026-08-27 08:54:33">2026-08-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>自制12L车载半导体制冷箱：3D打印全PETG外壳 + 水冷散热方案</p>
+<p>折腾了几天的半导体小冰箱终于完成组装，从内胆选型、结构设计到3D打印外壳、水路电路搭建全部自主完成。目前整机刚装配完毕，还没正式通电测试，先把整个项目的设计思路、物料清单和组装过程完整记录下来，先上效果图。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/car-mini-fridge/1783575555-untitled.2-1024x706.jpg" alt="" class="wp-image-106"></figure>
+
+<h2 id="项目背景与目标"><a href="#项目背景与目标" class="headerlink" title="项目背景与目标"></a>项目背景与目标</h2><p>夏天考虑天气热，开车出门想随时喝到凉的，一台小冰箱都是刚需。市售车载冰箱价格偏高(主要是想自己动手)，刚好手里有闲置的电脑水冷配件，再加一台3D打印机，干脆自己动手做一台半导体制冷小冰箱。</p>
+<p>本次项目的核心目标：</p>
+<ul>
+<li>12L左右内部容积，可容纳6-8罐罐装饮料</li>
+<li>支持车载12V电源供电，兼顾桌面与出行使用</li>
+<li>采用水冷散热方案，压低运行噪音</li>
+<li>全3D打印定制外壳，整机外观整洁一体化</li>
+<li>严格控制成本，优先利用闲置配件</li>
+</ul>
+<h2 id="物料清单与成本明细"><a href="#物料清单与成本明细" class="headerlink" title="物料清单与成本明细"></a>物料清单与成本明细</h2><p>核心配件全部来自网购，闲置的水冷排、风扇、水泵以及3D打印耗材未计入成本，整机核心采购成本控制在百元以内。</p>
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th class="has-text-align-left" data-align="left">部件</th><th class="has-text-align-center" data-align="center">单价（元）</th><th class="has-text-align-left" data-align="left">说明</th></tr></thead><tbody><tr><td class="has-text-align-left" data-align="left">EPE泡沫保温箱（12L）</td><td class="has-text-align-center" data-align="center">25.00</td><td class="has-text-align-left" data-align="left">制冷内胆，外形尺寸340×240×245mm</td></tr><tr><td class="has-text-align-left" data-align="left">TEC1-12706半导体制冷片</td><td class="has-text-align-center" data-align="center">12.80</td><td class="has-text-align-left" data-align="left">制冷核心，额定参数12V/6A</td></tr><tr><td class="has-text-align-left" data-align="left">CPU水冷套装</td><td class="has-text-align-center" data-align="center">25.00</td><td class="has-text-align-left" data-align="left">贴合制冷片热端，带走热量</td></tr><tr><td class="has-text-align-left" data-align="left">数显温度模块</td><td class="has-text-align-center" data-align="center">3.90</td><td class="has-text-align-left" data-align="left">探头内置，实时显示箱内温度</td></tr><tr><td class="has-text-align-left" data-align="left">300W 12A DC-DC降压模块</td><td class="has-text-align-center" data-align="center">11.20</td><td class="has-text-align-left" data-align="left">车载电源稳压，支持输出微调</td></tr><tr><td class="has-text-align-left" data-align="left">PWM风扇调速器</td><td class="has-text-align-center" data-align="center">3.60</td><td class="has-text-align-left" data-align="left">调节散热风扇转速，平衡噪音与散热</td></tr><tr><td class="has-text-align-left" data-align="left">车载电源插头</td><td class="has-text-align-center" data-align="center">4.28</td><td class="has-text-align-left" data-align="left">汽车点烟器接口取电</td></tr><tr><td class="has-text-align-left" data-align="left"><strong>合计</strong></td><td class="has-text-align-center" data-align="center"><strong>85.78</strong></td><td class="has-text-align-left" data-align="left">不含水冷排、风扇、水泵、硅脂、打印耗材</td></tr></tbody></table></figure>
+
+<p>额外用到的闲置&#x2F;自备配件：</p>
+<ul>
+<li>导热硅脂、导热硅胶垫</li>
+<li>PETG 3D打印耗材</li>
+</ul>
+<p>如果想省钱，可以用普通的泡沫箱，散热器改成风冷；</p>
+<h2 id="核心设计思路"><a href="#核心设计思路" class="headerlink" title="核心设计思路"></a>核心设计思路</h2><h3 id="1-保温内胆"><a href="#1-保温内胆" class="headerlink" title="1. 保温内胆"></a>1. 保温内胆</h3><p>内胆选用12L规格的EPE珍珠棉泡沫箱，优势非常明显：重量极轻、保温性能优秀、成本极低，且材质偏软易于开孔加工，非常适合DIY制冷箱的基础内胆。后续如果测试效果达标，还可以在内壁粘贴铝箔进一步提升箱内均温性。</p>
+<h3 id="2-制冷核心"><a href="#2-制冷核心" class="headerlink" title="2. 制冷核心"></a>2. 制冷核心</h3><p>制冷单元采用DIY圈最经典的TEC1-12706半导体制冷片，额定工作电压12V、电流6A，最大制冷功率约70W。对于12L的密闭小空间，单片制冷片理论上足以将箱内温度降到10℃以下，最终实际效果会在测试后验证。</p>
+<p>半导体制冷片的冷热端最大温差可达60℃以上，但性能上限完全取决于热端散热能力——这也是我放弃普通风冷、选择水冷方案的核心原因。</p>
+<h3 id="3-散热系统：水冷优于风冷的原因"><a href="#3-散热系统：水冷优于风冷的原因" class="headerlink" title="3. 散热系统：水冷优于风冷的原因"></a>3. 散热系统：水冷优于风冷的原因</h3><p>很多入门DIY半导体冰箱会用铝制散热片+风扇的风冷方案，优点是简单便宜，但短板也很突出：风扇转速高、噪音大，同体积下散热效率有限，热端温度压不住会直接拉低制冷效率，鳍片积灰后性能衰减也快。</p>
+<p>我直接复用了一套闲置的电脑CPU水冷系统：水冷头紧密贴合制冷片热端，通过水泵驱动水冷液循环，将热量传导至外置冷排，再由风扇主动排风。水冷的换热效率远高于同体积风冷，同时风扇可以维持低转速运行，噪音控制会好很多，无论是放桌面还是放车里都不会吵闹。</p>
+<h3 id="4-电源与控制逻辑"><a href="#4-电源与控制逻辑" class="headerlink" title="4. 电源与控制逻辑"></a>4. 电源与控制逻辑</h3><p>电源方案专门针对车载场景设计：</p>
+<ul>
+<li><strong>输入</strong>：汽车点烟器12V供电（实际行驶中电压会在11-14V之间波动）</li>
+<li><strong>稳压</strong>：通过300W DC-DC降压模块将波动的车载电压稳定在12V输出，同时支持微调电压来控制制冷功率；模块最高支持12A输出，单片12706完全留有冗余</li>
+<li><strong>调速</strong>：PWM调速器独立控制散热风扇转速，可根据环境温度和使用场景平衡噪音与散热效率</li>
+<li><strong>测温</strong>：数显温度模块的探头固定在箱体内部居中位置，实时显示当前箱内温度</li>
+</ul>
+<h3 id="5-3D打印外壳"><a href="#5-3D打印外壳" class="headerlink" title="5. 3D打印外壳"></a>5. 3D打印外壳</h3><p>整套外壳全部自主设计，采用PETG耗材打印，没有选用更常见的PLA主要出于两点考虑：</p>
+<ol>
+<li><strong>耐温性</strong>：PETG热变形温度高于PLA，靠近散热端的结构件不会因长期受热软化变形</li>
+<li><strong>防水性</strong>：PETG吸水率低，即便水路出现轻微渗水也不会影响结构强度</li>
+</ol>
+<p>外壳设计为内外分体结构，将制冷组件、水冷排、电源模块全部整合收纳在内；正面预留数显屏幕窗口，散热风扇直接暴露在外。</p>
+<figure class="wp-block-image alignleft size-large is-resized"><img src="/images/posts/car-mini-fridge/1783575776-image-1024x715.png" alt="" class="wp-image-110" style="aspect-ratio:1.4321869089165358;width:355px;height:auto"></figure>
+
+<figure class="wp-block-image size-large is-resized"><img src="/images/posts/car-mini-fridge/1783575946-image-1024x695.png" alt="" class="wp-image-114" style="aspect-ratio:1.473401485460575;width:442px;height:auto"></figure>
+
+<figure class="wp-block-video"><video controls="" src="/images/posts/car-mini-fridge/1783576764-video_2026-07-07_21-32-08.mp4"></video></figure>
+
+<figure class="wp-block-video"><video controls="" src="/images/posts/car-mini-fridge/1783576793-video_2026-07-08_16-25-12.mp4"></video></figure>
+
+<h2 id="组装过程记录"><a href="#组装过程记录" class="headerlink" title="组装过程记录"></a>组装过程记录</h2><h3 id="第一步：箱体开孔与制冷端安装"><a href="#第一步：箱体开孔与制冷端安装" class="headerlink" title="第一步：箱体开孔与制冷端安装"></a>第一步：箱体开孔与制冷端安装</h3><p>在泡沫箱顶面开出与制冷组件匹配的开孔，制冷片冷端朝向箱内，依次贴好导热硅胶垫与导冷铝块；热端朝向外侧，均匀涂抹导热硅脂后与水冷头压紧固定。开孔四周用保温棉填缝密封，避免冷气外泄和外部热空气渗入。</p>
+<h3 id="第二步：水冷回路搭建"><a href="#第二步：水冷回路搭建" class="headerlink" title="第二步：水冷回路搭建"></a>第二步：水冷回路搭建</h3><p>按照「水冷头 → 循环水泵 → 水冷排 → 水冷头」的顺序连接硅胶水管，注入水冷液后排尽回路内空气，静置确认无漏水后，再将冷排与风扇固定到外壳对应位置，对齐出风口保证风道通畅。</p>
+<h3 id="第三步：电气接线"><a href="#第三步：电气接线" class="headerlink" title="第三步：电气接线"></a>第三步：电气接线</h3><p>整体接线逻辑简单清晰：<br>车载电源输入 → DC-DC降压模块稳压输出 → 分为两路</p>
+<ul>
+<li>主回路：给半导体制冷片供电</li>
+<li>次回路：给水冷散热器、散热风扇供电<br>所有接线均用端子做好绝缘处理，线路整理后固定在外壳内部，避免车辆行驶晃动导致松脱短路。</li>
+</ul>
+<h3 id="第四步：整机总装"><a href="#第四步：整机总装" class="headerlink" title="第四步：整机总装"></a>第四步：整机总装</h3><p>将打印完成的外壳用玻璃胶粘贴在EPE泡沫箱外，同时做好封胶，再扣上集成了制冷、散热、电源模块的上盖，锁紧固定螺丝，整机组装完成。</p>
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><figure class="wp-block-image size-large is-resized"><img src="/images/posts/car-mini-fridge/1783923261-微信图片_20260713141333_204_178-1024x768.jpg" alt="" class="wp-image-131" style="width:420px;height:auto"></figure><figure class="wp-block-image size-large is-resized"><img src="/images/posts/car-mini-fridge/1783996234-微信图片_20260714102831_211_178-1024x768.jpg" alt="" class="wp-image-157" style="width:424px;height:auto"></figure></figure>
+
+<h2 id="当前进度与后续测试计划"><a href="#当前进度与后续测试计划" class="headerlink" title="当前进度与后续测试计划"></a>当前进度与后续测试计划</h2><p>目前整机已完成机械与电气装配，尚未进行正式通电测试。接下来会重点测试以下几项内容，后续会单独更新测试数据：</p>
+<ol>
+<li><strong>制冷性能</strong>：固定室温环境下，箱内降至最低温度的耗时，以及最终稳定温度</li>
+<li><strong>功耗数据</strong>：不同输出电压下的整机运行功率与制冷效率</li>
+<li><strong>噪音表现</strong>：不同风扇转速档位下的实际噪音情况</li>
+<li><strong>结露问题</strong>：长时间运行后箱体外部、制冷片周边是否会结露漏水</li>
+<li><strong>运行稳定性</strong>：连续24小时以上运行，是否会出现过热、停机等异常</li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>算下来核心配件不到90块钱，再加上闲置的水冷配件和打印耗材，总成本远低于同容量的成品车载冰箱。半导体制冷的优势是结构简单、无压缩机、体积小巧，非常适合小空间制冷场景；缺点是能效比不高，不适合做大容量冰箱。</p>
+<p>等后续测试完成，我会再更新详细的性能数据和优化方案，比如是否需要增加保温层、要不要加温控启停、结露问题怎么处理等等。</p>
+<p>需要我补充测试日志的模板，或者帮你细化某一部分的技术细节吗？</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://625021125.xyz">donniemarc</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://625021125.xyz/2026/06/26/car-mini-fridge/">https://625021125.xyz/2026/06/26/car-mini-fridge/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://625021125.xyz" target="_blank">Don·Lab</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/3dprint/">3d打印</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E7%A0%94%E8%AE%BE%E8%AE%A1/">自研设计</a></div><div class="post-share"><div class="social-share" data-image="/images/banner.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/06/26/esp32-desktop-robot/" title="ESP32 智能对话桌面机器人"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">ESP32 智能对话桌面机器人</div></div><div class="info-2"><div class="info-item-1">由于本人不懂写代码，所以采用Trae 来写代码，完成该项目； </div></div></div></a><a class="pagination-related" href="/2026/06/26/npm-nextcloud-ssl/" title="Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书</div></div><div class="info-2"><div class="info-item-1">原作者写的非常详细，担心文档丢失，特意保存； 文根据官方文档配置，供有需要用户参考。以下是官方文档链接。 Nextcloud Admin Manual https://docs.nextcloud.com/server/latest/admin_manual&#x2F; Nextcloud Reverse proxy https://docs.nextcloud.com/server/latest/admin_manual&#x2F;configuration_server&#x2F;reverse_proxy_configuration.html 本文配置最大亮点： 同时支持内网使用内网IP+内网端口号访问 Nextcloud 服务器 同时支持外网使用外网域名+外网端口号访问 Nextcloud 服务器 Nginx Proxy Manager 、Nextcloud 安装教程 请参照博客中相关教程配置。 ———————————————— 0 测试环境 TrueNAS 版本：25.04.1 Nextcloud 版本：31.0.7 Nginx Proxy Manager 版本 2.1...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/06/26/esp32-desktop-robot/" title="ESP32 智能对话桌面机器人"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">ESP32 智能对话桌面机器人</div></div><div class="info-2"><div class="info-item-1">由于本人不懂写代码，所以采用Trae 来写代码，完成该项目； </div></div></div></a><a class="pagination-related" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块</div></div><div class="info-2"><div class="info-item-1">  前言最近手头闲得慌，总想做点小玩意儿打发时间。翻了翻零件盒，躺着几颗闲置的旧 18650 电池，刷购物软件又看到了几块钱的 N20 减速电机，一拍脑袋 —— 干脆自己做个迷你电批吧。 本来就是纯玩性质，没追求什么工业级精度、大扭矩，也没想着替代市售成品。目标很简单：能拧拧 3D 打印件的 M3&#x2F;M4 螺丝、拆拆小电器外壳就行，主打一个低成本 + 从零到一的动手乐趣。从 UG 建模到 3D 打印外壳，再到焊接组装，前后花了几天，成品虽然朴素，但用着是真的顺手。 这篇文章就记录一下完整的制作过程，给同样喜欢瞎折腾的朋友做个参考。 1. 方案选型：怎么便宜怎么来既然是玩票，核心原则就是 “能用就行，成本最低”，不搞复杂结构，尽量减少机加工零件，全部用现成模块 + 3D 打印解决。 核心部件选择思路 动力核心：N20 减速电机 选了最常见的 N20 金属齿轮减速电机，转速选的 300 转 &#x2F; 分钟左右的版本，扭矩对付塑料螺丝和小金属螺丝完全够用，价格只要 6.25 元，坏了也不心疼。电压 3.7V，刚好匹配单节 18650，不用额外做升降压电路，省了很多麻烦。 供...</div></div></div></a><a class="pagination-related" href="/2026/06/26/lts-winder-control/" title="LTS绕线器改制控制方案"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">LTS绕线器改制控制方案</div></div><div class="info-2"><div class="info-item-1">采用通用方案，adrio+42步进电机实现绕线器的使用 </div></div></div></a><a class="pagination-related" href="/2026/06/26/car-wash-foam-tool/" title="洗车泡沫辅助工具"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">洗车泡沫辅助工具</div></div><div class="info-2"><div class="info-item-1">手压泡沫壶压到胳膊酸？3D打印转接件，用车载打气泵一键加压实现洗车自由 自己洗车也有快两年了，从水桶抹布一路升级到家用洗车机，唯独打泡沫这件事，始终没找到一个舒服的解决方案。 接洗车机的PA壶效果虽好，但搬机器、接水管一套流程下来太麻烦；楼下自助洗车的泡沫又稀得像兑水，挂不住车。最后入了个2L的手动气压泡沫壶，本以为终于能省心了，结果现实给了我一拳——每次洗车光给壶打气，就得压二三十下，打完一壶泡沫，胳膊先酸了一半。冬天穿得多的时候更费劲，压几下就得歇口气，打泡沫的节奏全被打乱。 灵感突发：用车载打气泵代替手压？前阵子给车胎打气的时候，我突然反应过来：这压力泡沫壶本质上就是个带喷嘴的密封储气罐啊，靠内部气压把泡沫液压出去。既然都是打气，为什么不能用车载打气泵直接给壶充气？ 家里现成的车载打气泵闲着也是闲着，既能省下手压的力气，充气速度还快，怎么想都比手动压靠谱。 但现实问题也很明显：普通的手压泡沫壶根本没有外接充气的接口，总不能举着打气泵的气嘴对着压杆孔硬吹，既漏风又固定不住，纯纯白费功夫。 既然买不到现成的配件，那就自己做一个。正好有3D打印机，量身打一个转接件不就行了。 设计...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">donniemarc</div><div class="author-info-description">3D打印爱好者 | 开源折腾者</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/donniemarc"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/donniemarc" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人网站！这里记录我的3D打印设计、开源项目和技术笔记。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">项目背景与目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E6%96%99%E6%B8%85%E5%8D%95%E4%B8%8E%E6%88%90%E6%9C%AC%E6%98%8E%E7%BB%86"><span class="toc-number">2.</span> <span class="toc-text">物料清单与成本明细</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">核心设计思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%9D%E6%B8%A9%E5%86%85%E8%83%86"><span class="toc-number">3.1.</span> <span class="toc-text">1. 保温内胆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%B6%E5%86%B7%E6%A0%B8%E5%BF%83"><span class="toc-number">3.2.</span> <span class="toc-text">2. 制冷核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%A3%E7%83%AD%E7%B3%BB%E7%BB%9F%EF%BC%9A%E6%B0%B4%E5%86%B7%E4%BC%98%E4%BA%8E%E9%A3%8E%E5%86%B7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">3.3.</span> <span class="toc-text">3. 散热系统：水冷优于风冷的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%94%B5%E6%BA%90%E4%B8%8E%E6%8E%A7%E5%88%B6%E9%80%BB%E8%BE%91"><span class="toc-number">3.4.</span> <span class="toc-text">4. 电源与控制逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3D%E6%89%93%E5%8D%B0%E5%A4%96%E5%A3%B3"><span class="toc-number">3.5.</span> <span class="toc-text">5. 3D打印外壳</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E8%A3%85%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">组装过程记录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%AE%B1%E4%BD%93%E5%BC%80%E5%AD%94%E4%B8%8E%E5%88%B6%E5%86%B7%E7%AB%AF%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.</span> <span class="toc-text">第一步：箱体开孔与制冷端安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%B0%B4%E5%86%B7%E5%9B%9E%E8%B7%AF%E6%90%AD%E5%BB%BA"><span class="toc-number">4.2.</span> <span class="toc-text">第二步：水冷回路搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%94%B5%E6%B0%94%E6%8E%A5%E7%BA%BF"><span class="toc-number">4.3.</span> <span class="toc-text">第三步：电气接线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%95%B4%E6%9C%BA%E6%80%BB%E8%A3%85"><span class="toc-number">4.4.</span> <span class="toc-text">第四步：整机总装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E8%BF%9B%E5%BA%A6%E4%B8%8E%E5%90%8E%E7%BB%AD%E6%B5%8B%E8%AF%95%E8%AE%A1%E5%88%92"><span class="toc-number">5.</span> <span class="toc-text">当前进度与后续测试计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">6.</span> <span class="toc-text">写在最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 文档中心"/></a><div class="content"><a class="title" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心">PlotVault PDM 文档中心</a><time datetime="2026-08-27T12:00:00.000Z" title="发表于 2026-08-27 20:00:00">2026-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 安装部署指南"/></a><div class="content"><a class="title" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南">PlotVault PDM 安装部署指南</a><time datetime="2026-08-26T04:00:00.000Z" title="发表于 2026-08-26 12:00:00">2026-08-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 使用说明"/></a><div class="content"><a class="title" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明">PlotVault PDM 使用说明</a><time datetime="2026-08-25T04:00:00.000Z" title="发表于 2026-08-25 12:00:00">2026-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 配置说明"/></a><div class="content"><a class="title" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明">PlotVault PDM 配置说明</a><time datetime="2026-08-24T04:00:00.000Z" title="发表于 2026-08-24 12:00:00">2026-08-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"/></a><div class="content"><a class="title" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块">纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块</a><time datetime="2026-06-26T02:31:08.000Z" title="发表于 2026-06-26 10:31:08">2026-06-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By donniemarc</span></div><div class="footer_custom_text">3D打印 | 开源项目 | 技术笔记</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/custom.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

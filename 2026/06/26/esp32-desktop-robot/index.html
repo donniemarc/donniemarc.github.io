@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ESP32 智能对话桌面机器人 | Don·Lab</title><meta name="author" content="donniemarc"><meta name="copyright" content="donniemarc"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="由于本人不懂写代码，所以采用Trae 来写代码，完成该项目；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32 智能对话桌面机器人">
+<meta property="og:url" content="https://625021125.xyz/2026/06/26/esp32-desktop-robot/index.html">
+<meta property="og:site_name" content="Don·Lab">
+<meta property="og:description" content="由于本人不懂写代码，所以采用Trae 来写代码，完成该项目；">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://625021125.xyz/images/banner.webp">
+<meta property="article:published_time" content="2026-06-26T01:22:59.000Z">
+<meta property="article:modified_time" content="2026-08-27T00:54:33.797Z">
+<meta property="article:author" content="donniemarc">
+<meta property="article:tag" content="3d打印">
+<meta property="article:tag" content="自研设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://625021125.xyz/images/banner.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ESP32 智能对话桌面机器人",
+  "url": "https://625021125.xyz/2026/06/26/esp32-desktop-robot/",
+  "image": "https://625021125.xyz/images/banner.webp",
+  "datePublished": "2026-06-26T01:22:59.000Z",
+  "dateModified": "2026-08-27T00:54:33.797Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "donniemarc",
+      "url": "https://625021125.xyz"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://625021125.xyz/2026/06/26/esp32-desktop-robot/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: 
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ESP32 智能对话桌面机器人',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-pen-nib"></i><span> Blog</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3dprint/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/banner.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Don·Lab</span></a><a class="nav-page-title" href="/"><span class="site-name">ESP32 智能对话桌面机器人</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-pen-nib"></i><span> Blog</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3dprint/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">ESP32 智能对话桌面机器人</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-26T01:22:59.000Z" title="发表于 2026-06-26 09:22:59">2026-06-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-27T00:54:33.797Z" title="更新于 2026-08-27 08:54:33">2026-08-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>由于本人不懂写代码，所以采用Trae 来写代码，完成该项目；</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://625021125.xyz">donniemarc</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://625021125.xyz/2026/06/26/esp32-desktop-robot/">https://625021125.xyz/2026/06/26/esp32-desktop-robot/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://625021125.xyz" target="_blank">Don·Lab</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/3dprint/">3d打印</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E7%A0%94%E8%AE%BE%E8%AE%A1/">自研设计</a></div><div class="post-share"><div class="social-share" data-image="/images/banner.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/06/26/car-wash-foam-tool/" title="洗车泡沫辅助工具"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">洗车泡沫辅助工具</div></div><div class="info-2"><div class="info-item-1">手压泡沫壶压到胳膊酸？3D打印转接件，用车载打气泵一键加压实现洗车自由 自己洗车也有快两年了，从水桶抹布一路升级到家用洗车机，唯独打泡沫这件事，始终没找到一个舒服的解决方案。 接洗车机的PA壶效果虽好，但搬机器、接水管一套流程下来太麻烦；楼下自助洗车的泡沫又稀得像兑水，挂不住车。最后入了个2L的手动气压泡沫壶，本以为终于能省心了，结果现实给了我一拳——每次洗车光给壶打气，就得压二三十下，打完一壶泡沫，胳膊先酸了一半。冬天穿得多的时候更费劲，压几下就得歇口气，打泡沫的节奏全被打乱。 灵感突发：用车载打气泵代替手压？前阵子给车胎打气的时候，我突然反应过来：这压力泡沫壶本质上就是个带喷嘴的密封储气罐啊，靠内部气压把泡沫液压出去。既然都是打气，为什么不能用车载打气泵直接给壶充气？ 家里现成的车载打气泵闲着也是闲着，既能省下手压的力气，充气速度还快，怎么想都比手动压靠谱。 但现实问题也很明显：普通的手压泡沫壶根本没有外接充气的接口，总不能举着打气泵的气嘴对着压杆孔硬吹，既漏风又固定不住，纯纯白费功夫。 既然买不到现成的配件，那就自己做一个。正好有3D打印机，量身打一个转接件不就行了。 设计...</div></div></div></a><a class="pagination-related" href="/2026/06/26/car-mini-fridge/" title="简易车载半导体小冰箱"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">简易车载半导体小冰箱</div></div><div class="info-2"><div class="info-item-1">自制12L车载半导体制冷箱：3D打印全PETG外壳 + 水冷散热方案 折腾了几天的半导体小冰箱终于完成组装，从内胆选型、结构设计到3D打印外壳、水路电路搭建全部自主完成。目前整机刚装配完毕，还没正式通电测试，先把整个项目的设计思路、物料清单和组装过程完整记录下来，先上效果图。   项目背景与目标夏天考虑天气热，开车出门想随时喝到凉的，一台小冰箱都是刚需。市售车载冰箱价格偏高(主要是想自己动手)，刚好手里有闲置的电脑水冷配件，再加一台3D打印机，干脆自己动手做一台半导体制冷小冰箱。 本次项目的核心目标：  12L左右内部容积，可容纳6-8罐罐装饮料 支持车载12V电源供电，兼顾桌面与出行使用 采用水冷散热方案，压低运行噪音 全3D打印定制外壳，整机外观整洁一体化 严格控制成本，优先利用闲置配件  物料清单与成本明细核心配件全部来自网购，闲置的水冷排、风扇、水泵以及3D打印耗材未计入成本，整机核心采购成本控制在百元以内。 部件单价（元）说明EPE泡沫保温箱（12L）25.00制冷内胆，外形尺寸340×240×245mmTEC1-12706半导体制冷片12.80制冷核心，额定参数12V...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/06/26/car-wash-foam-tool/" title="洗车泡沫辅助工具"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">洗车泡沫辅助工具</div></div><div class="info-2"><div class="info-item-1">手压泡沫壶压到胳膊酸？3D打印转接件，用车载打气泵一键加压实现洗车自由 自己洗车也有快两年了，从水桶抹布一路升级到家用洗车机，唯独打泡沫这件事，始终没找到一个舒服的解决方案。 接洗车机的PA壶效果虽好，但搬机器、接水管一套流程下来太麻烦；楼下自助洗车的泡沫又稀得像兑水，挂不住车。最后入了个2L的手动气压泡沫壶，本以为终于能省心了，结果现实给了我一拳——每次洗车光给壶打气，就得压二三十下，打完一壶泡沫，胳膊先酸了一半。冬天穿得多的时候更费劲，压几下就得歇口气，打泡沫的节奏全被打乱。 灵感突发：用车载打气泵代替手压？前阵子给车胎打气的时候，我突然反应过来：这压力泡沫壶本质上就是个带喷嘴的密封储气罐啊，靠内部气压把泡沫液压出去。既然都是打气，为什么不能用车载打气泵直接给壶充气？ 家里现成的车载打气泵闲着也是闲着，既能省下手压的力气，充气速度还快，怎么想都比手动压靠谱。 但现实问题也很明显：普通的手压泡沫壶根本没有外接充气的接口，总不能举着打气泵的气嘴对着压杆孔硬吹，既漏风又固定不住，纯纯白费功夫。 既然买不到现成的配件，那就自己做一个。正好有3D打印机，量身打一个转接件不就行了。 设计...</div></div></div></a><a class="pagination-related" href="/2026/06/26/car-mini-fridge/" title="简易车载半导体小冰箱"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">简易车载半导体小冰箱</div></div><div class="info-2"><div class="info-item-1">自制12L车载半导体制冷箱：3D打印全PETG外壳 + 水冷散热方案 折腾了几天的半导体小冰箱终于完成组装，从内胆选型、结构设计到3D打印外壳、水路电路搭建全部自主完成。目前整机刚装配完毕，还没正式通电测试，先把整个项目的设计思路、物料清单和组装过程完整记录下来，先上效果图。   项目背景与目标夏天考虑天气热，开车出门想随时喝到凉的，一台小冰箱都是刚需。市售车载冰箱价格偏高(主要是想自己动手)，刚好手里有闲置的电脑水冷配件，再加一台3D打印机，干脆自己动手做一台半导体制冷小冰箱。 本次项目的核心目标：  12L左右内部容积，可容纳6-8罐罐装饮料 支持车载12V电源供电，兼顾桌面与出行使用 采用水冷散热方案，压低运行噪音 全3D打印定制外壳，整机外观整洁一体化 严格控制成本，优先利用闲置配件  物料清单与成本明细核心配件全部来自网购，闲置的水冷排、风扇、水泵以及3D打印耗材未计入成本，整机核心采购成本控制在百元以内。 部件单价（元）说明EPE泡沫保温箱（12L）25.00制冷内胆，外形尺寸340×240×245mmTEC1-12706半导体制冷片12.80制冷核心，额定参数12V...</div></div></div></a><a class="pagination-related" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块</div></div><div class="info-2"><div class="info-item-1">  前言最近手头闲得慌，总想做点小玩意儿打发时间。翻了翻零件盒，躺着几颗闲置的旧 18650 电池，刷购物软件又看到了几块钱的 N20 减速电机，一拍脑袋 —— 干脆自己做个迷你电批吧。 本来就是纯玩性质，没追求什么工业级精度、大扭矩，也没想着替代市售成品。目标很简单：能拧拧 3D 打印件的 M3&#x2F;M4 螺丝、拆拆小电器外壳就行，主打一个低成本 + 从零到一的动手乐趣。从 UG 建模到 3D 打印外壳，再到焊接组装，前后花了几天，成品虽然朴素，但用着是真的顺手。 这篇文章就记录一下完整的制作过程，给同样喜欢瞎折腾的朋友做个参考。 1. 方案选型：怎么便宜怎么来既然是玩票，核心原则就是 “能用就行，成本最低”，不搞复杂结构，尽量减少机加工零件，全部用现成模块 + 3D 打印解决。 核心部件选择思路 动力核心：N20 减速电机 选了最常见的 N20 金属齿轮减速电机，转速选的 300 转 &#x2F; 分钟左右的版本，扭矩对付塑料螺丝和小金属螺丝完全够用，价格只要 6.25 元，坏了也不心疼。电压 3.7V，刚好匹配单节 18650，不用额外做升降压电路，省了很多麻烦。 供...</div></div></div></a><a class="pagination-related" href="/2026/06/26/lts-winder-control/" title="LTS绕线器改制控制方案"><img class="cover" src="/images/banner.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-26</div><div class="info-item-2">LTS绕线器改制控制方案</div></div><div class="info-2"><div class="info-item-1">采用通用方案，adrio+42步进电机实现绕线器的使用 </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">donniemarc</div><div class="author-info-description">3D打印爱好者 | 开源折腾者</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/donniemarc"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/donniemarc" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人网站！这里记录我的3D打印设计、开源项目和技术笔记。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 文档中心"/></a><div class="content"><a class="title" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心">PlotVault PDM 文档中心</a><time datetime="2026-08-27T12:00:00.000Z" title="发表于 2026-08-27 20:00:00">2026-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 安装部署指南"/></a><div class="content"><a class="title" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南">PlotVault PDM 安装部署指南</a><time datetime="2026-08-26T04:00:00.000Z" title="发表于 2026-08-26 12:00:00">2026-08-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 使用说明"/></a><div class="content"><a class="title" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明">PlotVault PDM 使用说明</a><time datetime="2026-08-25T04:00:00.000Z" title="发表于 2026-08-25 12:00:00">2026-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 配置说明"/></a><div class="content"><a class="title" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明">PlotVault PDM 配置说明</a><time datetime="2026-08-24T04:00:00.000Z" title="发表于 2026-08-24 12:00:00">2026-08-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"/></a><div class="content"><a class="title" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块">纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块</a><time datetime="2026-06-26T02:31:08.000Z" title="发表于 2026-06-26 10:31:08">2026-06-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By donniemarc</span></div><div class="footer_custom_text">3D打印 | 开源项目 | 技术笔记</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/custom.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

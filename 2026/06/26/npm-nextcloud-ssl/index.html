@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书 | Don·Lab</title><meta name="author" content="donniemarc"><meta name="copyright" content="donniemarc"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="原作者写的非常详细，担心文档丢失，特意保存； 文根据官方文档配置，供有需要用户参考。以下是官方文档链接。 Nextcloud Admin Manual https:&#x2F;&#x2F;docs.nextcloud.com&#x2F;server&#x2F;latest&#x2F;admin_manual&#x2F; Nextcloud Reverse proxy https:&#x2F;&#x2F;docs.nextcloud.com&#x2F;server&#x2F;latest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书">
+<meta property="og:url" content="https://625021125.xyz/2026/06/26/npm-nextcloud-ssl/index.html">
+<meta property="og:site_name" content="Don·Lab">
+<meta property="og:description" content="原作者写的非常详细，担心文档丢失，特意保存； 文根据官方文档配置，供有需要用户参考。以下是官方文档链接。 Nextcloud Admin Manual https:&#x2F;&#x2F;docs.nextcloud.com&#x2F;server&#x2F;latest&#x2F;admin_manual&#x2F; Nextcloud Reverse proxy https:&#x2F;&#x2F;docs.nextcloud.com&#x2F;server&#x2F;latest">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://625021125.xyz/images/banner.webp">
+<meta property="article:published_time" content="2026-06-26T01:11:12.000Z">
+<meta property="article:modified_time" content="2026-08-27T00:54:33.646Z">
+<meta property="article:author" content="donniemarc">
+<meta property="article:tag" content="NAS">
+<meta property="article:tag" content="Truenas">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://625021125.xyz/images/banner.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书",
+  "url": "https://625021125.xyz/2026/06/26/npm-nextcloud-ssl/",
+  "image": "https://625021125.xyz/images/banner.webp",
+  "datePublished": "2026-06-26T01:11:12.000Z",
+  "dateModified": "2026-08-27T00:54:33.646Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "donniemarc",
+      "url": "https://625021125.xyz"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/favicon.jpg"><link rel="canonical" href="https://625021125.xyz/2026/06/26/npm-nextcloud-ssl/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: 
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-pen-nib"></i><span> Blog</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3dprint/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/banner.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Don·Lab</span></a><a class="nav-page-title" href="/"><span class="site-name">Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-pen-nib"></i><span> Blog</span></a></div><div class="menus_item"><a class="site-page" href="/tags/3dprint/"><i class="fa-fw fas fa-cube"></i><span> 3D打印</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-code"></i><span> 开源项目</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/plotvault/"><i class="fa-fw fas fa-database"></i><span> PlotVault</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Nginx Proxy Manager 反向代理 Nextcloud 并启用SSL证书</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-26T01:11:12.000Z" title="发表于 2026-06-26 09:11:12">2026-06-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-27T00:54:33.646Z" title="更新于 2026-08-27 08:54:33">2026-08-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>原作者写的非常详细，担心文档丢失，特意保存；</p>
+<p>文根据官方文档配置，供有需要用户参考。以下是官方文档链接。</p>
+<p>Nextcloud Admin Manual <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/">https://docs.nextcloud.com/server/latest/admin_manual&#x2F;</a> Nextcloud Reverse proxy <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/reverse_proxy_configuration.html">https://docs.nextcloud.com/server/latest/admin_manual&#x2F;configuration_server&#x2F;reverse_proxy_configuration.html</a></p>
+<p>本文配置最大亮点：</p>
+<p>同时支持内网使用内网IP+内网端口号访问 Nextcloud 服务器 同时支持外网使用外网域名+外网端口号访问 Nextcloud 服务器 Nginx Proxy Manager 、Nextcloud 安装教程 请参照博客中相关教程配置。 ———————————————— 0 测试环境 TrueNAS 版本：25.04.1 Nextcloud 版本：31.0.7 Nginx Proxy Manager 版本 2.12.6 1 前提条件 外网访问域名已做DDNS解析至TrueNAS服务器 路由器已将TrueNAS服务器放置在DMZ区域，或者已配置好IPv6、IPv4端口转发 2 配置 Nginx Proxy Manager 2.1 申请 SSL 证书 S1：依次点击 SSL Certificates → Add SSL Certificate → Let’s Encrypt</p>
+<p>S2：依次输入需要申请证书的域名 Domain Names （一般建议申请泛域名证书），可以同时申请多个域名，但需要域名服务商为同一个。</p>
+<p>S3：输入 Email Address for Let’s Encrypt ，一般建议真实邮箱，方便接收消息通知。</p>
+<p>S4：勾选启用 Use a DNS Challenge，以使用DNS服务商验证。</p>
+<p>S5：选择 DNS Provider，根据实际选择自身域名服务商，并配置相关参数（如：阿里云，需要提前准备 Access Key和 Access Key Secret ）。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462441-533ae916eada4dcb8a461fbf5bb57549-1024x801.png" alt="" class="wp-image-88"></figure>
+
+<p><strong>S6</strong>：查看SSL证书申请是否成功，成功后可以看到期时间，以及该证书是否正在使用。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462433-6ed3dd7fde6d44a6b793b0d4cf73f1d4-1024x273.png" alt="" class="wp-image-83"></figure>
+
+<p>2.2 添加 反向代理主机 2.2.1 配置 Details S1：根据实际，依次配置 反向代理域名 → 选择 Nextcloud 后端服务器 Scheme（http或https） → Nextcloud 后端服务器 主机名或IP地址 → Nextcloud 后端服务器端口号。</p>
+<p>S2：根据实际，选择启用 静态资源缓存 Cache Assets、阻止常见漏洞 Block Common Exploits、启用WS支持双向通信 Websockets Support。一般建议全部启用。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462464-ed2f7e3599cb46eeb35d99fea100298b-1024x479.png" alt="" class="wp-image-94"></figure>
+
+<p>S3：根据实际，选择 访问控制列表 Access List 。</p>
+<p>2.2.2 配置 SSL S1 ：根据实际，在 SSL Certificate 选择已经申请的证书，或者申请新证书。</p>
+<p>S2：根据实际，选择启用 强制HTTPS重定向 Force SSL、HTTP 2.0 协议 HTTP&#x2F;2 Support 、HTTP 严格传输安全 HSTS Enabled 、HSTS 子域名 HSTS Subdomains 。一般建议全部启用。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462457-b076341b07d84177a3be9a3f2755608d-1024x375.png" alt="" class="wp-image-92"></figure>
+
+<p>2.2.3 配置 Advanced 参考 Nextcloud 官方文档，需要在 Nginx Proxy Manager 高级配置中进一步配置。以下是官方链接和相关截图。</p>
+<p>Nextcloud Docs —— Reverse proxy <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/reverse_proxy_configuration.html">https://docs.nextcloud.com/server/latest/admin_manual&#x2F;configuration_server&#x2F;reverse_proxy_configuration.html</a></p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462434-87ce5f0564fe4693ab6ac9a035f36104-1024x479.png" alt="" class="wp-image-85"></figure>
+
+<p><strong>S1</strong>：在 <strong>Advanced</strong> → <strong>Custom Nginx Configuration</strong>，添加以下 3个 <strong>location</strong> 配置。</p>
+<p>**_*注意*_：**请修改 <strong>$ host</strong> 变量 为 <strong>$http_host</strong>，主要是因为 <strong>http_host</strong> 变量可以带端口传输，否则会出错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">location /.well-known/carddav &#123;</span><br><span class="line">    return 301 $scheme://$http_host/remote.php/dav;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">location /.well-known/caldav &#123;</span><br><span class="line">    return 301 $scheme://$http_host/remote.php/dav;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">location ^~ /.well-known &#123;</span><br><span class="line">    return 301 $scheme://$http_host/index.php$uri;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>S2</strong>：在 <strong>Advanced</strong> → <strong>Custom Nginx Configuration</strong>，添加 <strong>proxy_hide_header Upgrade;</strong> 配置，解决移动设备收到 <strong>链接关闭 Connection Closed</strong> 的错误信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_hide_header Upgrade;</span><br></pre></td></tr></table></figure>
+
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462449-a51687836c2f40979481fbf4f2abe5b8-1024x557.png" alt="" class="wp-image-90"></figure>
+
+<p>3 配置 Nextcloud 3.1 配置 Truested domains 参考 Nextcloud 官方文档，将反向代理域名+端口号填入 trusted_domains 字段内。以下是官方文档和相关截图。</p>
+<p>Trusted domains <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/installation_wizard.html#trusted-domains">https://docs.nextcloud.com/server/latest/admin_manual&#x2F;installation&#x2F;installation_wizard.html#trusted-domains</a></p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462465-fd3ab37a42fd438894161620b6c368af-1024x796.png" alt="" class="wp-image-95"></figure>
+
+<p>本文中，反向代理后，外网访问域名为 nextcloud.example.com，其配置步骤如下。</p>
+<p><strong>S1</strong>：进入 <strong>nextcloud</strong> 容器命令行。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462424-3b9cfa684db943a2a3cd84937edb4a14-1024x532.png" alt="" class="wp-image-80"></figure>
+
+<p><strong>S2</strong> ：进入 <strong>config</strong> 文件夹，找到 <strong>config.php</strong> 文件。</p>
+<p>可以使用 <strong>ls</strong> 命令，列出当前文件夹内的文件夹和文件，使用 <strong>cd</strong> 命令进入 <strong>config</strong> 文件夹。</p>
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462430-4d6f19813e4c47d3835f74735e2142d9-1024x241.png" alt="" class="wp-image-82"></figure>
+
+<p><strong>S3</strong>：执行 <strong>apt update</strong> 命令，更新软件源；执行 <strong>apt install vim</strong> 命令，安装 <strong>vim</strong> 文档编写软件（如果已安装 <strong>vi</strong> 、<strong>nano</strong> 、<strong>vim</strong> 等文档编写软件，可以忽略此步骤）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">​</span><br><span class="line">apt install vim</span><br></pre></td></tr></table></figure>
+
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462451-b7b2d0cbef164d3da89d0d7d6dd133f0-1024x527.png" alt="" class="wp-image-91"></figure>
+
+<p>S4 编辑 config.php 文件。注意缩进和英文符号。</p>
+<p>在 trusted_domains 字段 添加 nextcloud.example.com 。注意：请务必使用 英文冒号、英文逗号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x27;trusted_domains&#x27; =&gt; </span><br><span class="line">  array (</span><br><span class="line">    0 =&gt; &#x27;127.0.0.1&#x27;,</span><br><span class="line">    1 =&gt; &#x27;192.168.5.5&#x27;,</span><br><span class="line">    2 =&gt; &#x27;localhost&#x27;,</span><br><span class="line">    3 =&gt; &#x27;nextcloud&#x27;,</span><br><span class="line">    4 =&gt; &#x27;nextcloud.example.com&#x27;,</span><br><span class="line">  ),</span><br></pre></td></tr></table></figure>
+
+<figure class="wp-block-image size-large"><img src="/images/posts/npm-nextcloud-ssl/1782462458-c4bba2c592c64416b65e69e2ecfbb66a-1024x531.png" alt="" class="wp-image-93"></figure>
+
+<h3 id="3-2-配置-Trusted-proxies"><a href="#3-2-配置-Trusted-proxies" class="headerlink" title="3.2 配置 Trusted proxies"></a>3.2 配置 Trusted proxies</h3><figure class="wp-block-image"><img src="https://i-blog.csdnimg.cn/direct/4a7087532e80461b881d88196f0434b3.png" alt="img"></figure>
+
+<p>在config&#x2F;config.php文件中，默认无 trusted_proxies 字段。该字段参数是一个数组，其内容可以是 IPv4 地址、IPv4地址范围（CIDR）、IPv6地址、IPv6地址范围（CIDR），其格式可以参考 trusted_domains 字段。</p>
+<p>S1：进入 nextcloud 容器，并在 config 文件夹内找到 config.php 文件，使用文档编写软件 vim 打开 config.php。</p>
+<p>S2：添加 Nginx Proxy Manager 服务器 IP地址（如：192.168.5.5） 到 trusted_domains 字段。本文应对 NPM服务器地址变更，故将 172.16.0.0&#x2F;12 192.168.0.0&#x2F;16 等2个常见内网IP地址范围添加到信任代理里面。注意缩进和英文符号。</p>
+<ol>
+<li><ol>
+<li></li>
+</ol>
+<p>    ‘trusted_proxies’ &#x3D;&gt;<br>2.   array (<br>3. •   0 &#x3D;&gt; ‘172.16.0.0&#x2F;12’,<br>4. •   1 &#x3D;&gt; ‘192.168.0.0&#x2F;16’,<br>5.   ),</p>
+</li>
+<li><p>3.3 定义客户端原始HTTP头（定义请求端真实IP传递方式）<img src="https://i-blog.csdnimg.cn/direct/531f343ca06e4442b05b6e0f8dc9a06b.png" alt="img"></p>
+</li>
+<li><p>反向代理软件可以使用原始客户端 IP 地址定义 HTTP 标头，并且 Nextcloud 可以使用HTTP标头来检索该 IP 地址。默认情况下，Nextcloud 使用 标头 X-Forwarded-For 传递客户端真实IP，但有时会出问题，可以添加新的传递方式 HTTP_X_FORWARDED_FOR。具体方法是在config.php文件中使用 forwarded_for_headers 参数进行配置，该参数也是一个数组。注意缩进和英文符号。 ‘forwarded_for_headers’ &#x3D;&gt;<br>array (<br>  0 &#x3D;&gt; ‘X-Forwarded-For’,<br>  1 &#x3D;&gt; ‘HTTP_X_FORWARDED_FOR’,<br>),</p>
+</li>
+</ol>
+<figure class="wp-block-image"><img src="https://i-blog.csdnimg.cn/direct/c4bba2c592c64416b65e69e2ecfbb66a.png" alt="img"></figure>
+
+<h3 id="3-4-覆写参数"><a href="#3-4-覆写参数" class="headerlink" title="3.4 覆写参数"></a>3.4 覆写参数</h3><p>在反向代理某些情况下，Nextcloud 的主机名、协议或 webroot 的自动检测可能会失败，那么就需要在<code>config/config.php</code> 文件中使用覆盖参数，手动覆盖自动检测。</p>
+<figure class="wp-block-image"><img src="https://i-blog.csdnimg.cn/direct/7e197f912c734133aeb02379a887bb8d.png" alt="img"></figure>
+
+<p><strong>S1</strong>：覆写反向代理后Nextcloud主机名称，<strong>务必</strong>携带端口号。</p>
+<p><strong>注意：此步骤用于解决，反向代理后，外网域名+端口访问Nextcloud服务器，在登录界面输入账号密码，无法正确跳转的问题。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;overwritehost&#x27; =&gt; &#x27;nextcloud.example.com:30022&#x27;,</span><br></pre></td></tr></table></figure>
+
+<p>**S2：**覆写代理协议，可以从 http 或 https 中选择一个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;overwriteprotocol&#x27; =&gt; &#x27;https&#x27;,</span><br></pre></td></tr></table></figure>
+
+<p>**S3：**覆写webroot路径，一般不需要，留空即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;overwritewebroot&#x27; =&gt; &#x27;&#x27;,</span><br></pre></td></tr></table></figure>
+
+<p>**S4：**覆写条件。内容是一个正则表达式，表达式为真时，进行覆写。</p>
+<p><strong>注意：此步骤主要用于实现，反向代理后，外网使用域名+外网端口号访问Nextcloud 服务器，内网使用内网IP+内网端口号访问。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;overwritecondaddr&#x27; =&gt; &#x27;^(?!192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])).*$&#x27;,</span><br></pre></td></tr></table></figure>
+
+<p>备注：以上正则表示含义是指，使用非内网IP网段访问nextcloud服务器时，将对参数进行覆写。即外网访问时，才覆写。以下是参考文档。</p>
+<p>外网使用域名+外网端口号访问 | 内网使用内网IP+内网端口号访问 <a target="_blank" rel="noopener" href="https://help.nextcloud.com/t/domain-redirects-to-local-ip-using-cloudflare-on-truenas/222534/4">https://help.nextcloud.com/t/domain-redirects-to-local-ip-using-cloudflare-on-truenas/222534/4</a></p>
+<p>S5：覆写命令行自动生成的URL。请填写完整链接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;overwrite.cli.url&#x27; =&gt; &#x27;https://nextcloud.example.com:30022&#x27;,</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://625021125.xyz">donniemarc</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://625021125.xyz/2026/06/26/npm-nextcloud-ssl/">https://625021125.xyz/2026/06/26/npm-nextcloud-ssl/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://625021125.xyz" target="_blank">Don·Lab</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Truenas/">Truenas</a><a class="post-meta__tags" href="/tags/NAS/">NAS</a></div><div class="post-share"><div class="social-share" data-image="/images/banner.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/06/26/car-mini-fridge/" title="简易车载半导体小冰箱"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">简易车载半导体小冰箱</div></div><div class="info-2"><div class="info-item-1">自制12L车载半导体制冷箱：3D打印全PETG外壳 + 水冷散热方案 折腾了几天的半导体小冰箱终于完成组装，从内胆选型、结构设计到3D打印外壳、水路电路搭建全部自主完成。目前整机刚装配完毕，还没正式通电测试，先把整个项目的设计思路、物料清单和组装过程完整记录下来，先上效果图。   项目背景与目标夏天考虑天气热，开车出门想随时喝到凉的，一台小冰箱都是刚需。市售车载冰箱价格偏高(主要是想自己动手)，刚好手里有闲置的电脑水冷配件，再加一台3D打印机，干脆自己动手做一台半导体制冷小冰箱。 本次项目的核心目标：  12L左右内部容积，可容纳6-8罐罐装饮料 支持车载12V电源供电，兼顾桌面与出行使用 采用水冷散热方案，压低运行噪音 全3D打印定制外壳，整机外观整洁一体化 严格控制成本，优先利用闲置配件  物料清单与成本明细核心配件全部来自网购，闲置的水冷排、风扇、水泵以及3D打印耗材未计入成本，整机核心采购成本控制在百元以内。 部件单价（元）说明EPE泡沫保温箱（12L）25.00制冷内胆，外形尺寸340×240×245mmTEC1-12706半导体制冷片12.80制冷核心，额定参数12V...</div></div></div></a><a class="pagination-related" href="/2026/06/26/lts-winder-control/" title="LTS绕线器改制控制方案"><img class="cover" src="/images/banner.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">LTS绕线器改制控制方案</div></div><div class="info-2"><div class="info-item-1">采用通用方案，adrio+42步进电机实现绕线器的使用 </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">donniemarc</div><div class="author-info-description">3D打印爱好者 | 开源折腾者</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/donniemarc"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/donniemarc" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人网站！这里记录我的3D打印设计、开源项目和技术笔记。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E9%85%8D%E7%BD%AE-Trusted-proxies"><span class="toc-number">1.</span> <span class="toc-text">3.2 配置 Trusted proxies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%A6%86%E5%86%99%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">3.4 覆写参数</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 文档中心"/></a><div class="content"><a class="title" href="/2026/08/27/plotvault-docs/" title="PlotVault PDM 文档中心">PlotVault PDM 文档中心</a><time datetime="2026-08-27T12:00:00.000Z" title="发表于 2026-08-27 20:00:00">2026-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 安装部署指南"/></a><div class="content"><a class="title" href="/2026/08/26/plotvault-installation/" title="PlotVault PDM 安装部署指南">PlotVault PDM 安装部署指南</a><time datetime="2026-08-26T04:00:00.000Z" title="发表于 2026-08-26 12:00:00">2026-08-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 使用说明"/></a><div class="content"><a class="title" href="/2026/08/25/plotvault-usage/" title="PlotVault PDM 使用说明">PlotVault PDM 使用说明</a><time datetime="2026-08-25T04:00:00.000Z" title="发表于 2026-08-25 12:00:00">2026-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PlotVault PDM 配置说明"/></a><div class="content"><a class="title" href="/2026/08/24/plotvault-configuration/" title="PlotVault PDM 配置说明">PlotVault PDM 配置说明</a><time datetime="2026-08-24T04:00:00.000Z" title="发表于 2026-08-24 12:00:00">2026-08-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"><img src="/images/banner.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块"/></a><div class="content"><a class="title" href="/2026/06/26/n20-mini-electric-screwdriver/" title="纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块">纯玩向：用 UG+3D 打印自制一把 N20 迷你电批，总成本不到 15 块</a><time datetime="2026-06-26T02:31:08.000Z" title="发表于 2026-06-26 10:31:08">2026-06-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By donniemarc</span></div><div class="footer_custom_text">3D打印 | 开源项目 | 技术笔记</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/custom.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
