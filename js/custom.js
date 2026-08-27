@@ -6,8 +6,19 @@
     if (!sub || sub.dataset.typingReady) return;
     sub.dataset.typingReady = '1';
 
+    // 在 #subtitle 上方插入 Don·Lab 静态标题
+    const siteInfo = document.querySelector('#site-info');
+    const labTitle = document.createElement('div');
+    labTitle.className = 'home-lab-title';
+    labTitle.textContent = 'Don·Lab';
+    siteInfo.insertBefore(labTitle, sub);
+
     const strings = [
-      'Don·Lab'
+      '把脑海中的构想，一点点打印成现实，是创造者独有的浪漫。',
+      '每一行代码，都是向世界交出的、一份小小的信任。',
+      '真正的热爱，是失败一百次之后，依然想再试一次。',
+      '记录不是为了证明存在，而是为了让思考留下痕迹。',
+      '折腾不止，是因为相信亲手创造，好过坐等答案。'
     ];
 
     let stringIndex = 0;

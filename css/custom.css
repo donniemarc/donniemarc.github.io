@@ -100,6 +100,16 @@ body::before {
   min-height: 2.6em;
 }
 
+/* Don·Lab title above typing text */
+.home-lab-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: white !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
 /* ---------- Post card layout ---------- */
 #post-list {
   display: grid;
