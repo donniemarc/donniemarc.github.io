@@ -5,8 +5,8 @@
 /* ---------- Dark smoked glass global (matches black bg video) ---------- */
 :root {
   /* Glass surfaces */
-  --card-bg: rgba(10, 10, 14, 0.55);
-  --glass-bg: rgba(10, 10, 14, 0.55);
+  --card-bg: rgba(35, 35, 38, 0.6);
+  --glass-bg: rgba(35, 35, 38, 0.6);
   --glass-border: rgba(255, 255, 255, 0.14);
   --card-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
   --card-hover-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
@@ -31,17 +31,17 @@
   --global-bg: transparent;
   --sidebar-bg: transparent;
   --sidebar-menu-bg: rgba(255, 255, 255, 0.08);
-  --search-bg: rgba(16, 16, 20, 0.95);
+  --search-bg: rgba(35, 35, 38, 0.95);
   --search-input-color: rgba(255, 255, 255, 0.8);
   --search-a-color: rgba(255, 255, 255, 0.8);
-  --zoom-bg: rgba(10, 10, 14, 0.85);
+  --zoom-bg: rgba(35, 35, 38, 0.85);
 
   /* Buttons */
   --btn-hover-color: #ff7242;
 }
 
 [data-theme='dark'] {
-  --card-bg: rgba(10, 10, 14, 0.55);
+  --card-bg: rgba(35, 35, 38, 0.6);
 }
 
 /* Fixed background image so the glass has something to blur
@@ -94,7 +94,7 @@ body {
 /* Nav bar when scrolled / fixed / on pages without top img */
 #page-header.nav-fixed > #nav,
 #page-header.not-top-img > #nav {
-  background: rgba(10, 10, 14, 0.55);
+  background: rgba(35, 35, 38, 0.6);
 }
 
 /* ---------- Home page header ---------- */
