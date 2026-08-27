@@ -69,6 +69,11 @@ body {
   background-color: transparent !important;
 }
 
+/* Inner pages: header fallback color should not be blue */
+#page-header:not(.full_page) {
+  background-color: transparent !important;
+}
+
 /* Semi-transparent dark smoked glass cards */
 .card-widget,
 .layout > div:first-child:not(.nc),
@@ -353,6 +358,10 @@ body {
 }
 
 /* ---------- Footer text ---------- */
+#footer {
+  background-color: transparent;
+}
+
 #footer,
 #footer a,
 #footer .footer-other-left {
