@@ -60,28 +60,28 @@
   }
 })();
 
-// Full-screen looping background video
+// Background image (no video)
 (function() {
-  function initBgVideo() {
+  function initBgImage() {
     if (document.getElementById('bg-video')) return;
     const v = document.createElement('video');
     v.id = 'bg-video';
-    v.poster = '/images/bbg1.jpg';
+    v.poster = '/images/bg2.jpg';
     v.setAttribute('autoplay', '');
     v.setAttribute('loop', '');
     v.muted = true;
     v.defaultMuted = true;
     v.setAttribute('playsinline', '');
     v.setAttribute('preload', 'auto');
-    v.src = '/images/bg1.mp4';
+    v.src = '/images/bg2.jpg';
     document.body.appendChild(v);
     const p = v.play();
     if (p && p.catch) p.catch(function() {});
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBgVideo);
+    document.addEventListener('DOMContentLoaded', initBgImage);
   } else {
-    initBgVideo();
+    initBgImage();
   }
 })();
