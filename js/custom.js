@@ -13,12 +13,47 @@
     labTitle.textContent = 'Don·Lab';
     siteInfo.insertBefore(labTitle, document.querySelector('#site-info #site-subtitle'));
 
+    // 在 #site-subtitle 下方插入搜索框
+    const subtitle = document.querySelector('#site-subtitle');
+    const searchBox = document.createElement('div');
+    searchBox.className = 'home-search-box';
+    searchBox.innerHTML = `
+      <div class="home-search-inner">
+        <i class="fas fa-search home-search-icon"></i>
+        <input type="text" class="home-search-input" placeholder="">
+      </div>
+    `;
+    siteInfo.insertBefore(searchBox, subtitle.nextSibling);
+
+    // 搜索框回车触发本地搜索
+    const searchInput = searchBox.querySelector('.home-search-input');
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const q = this.value.trim();
+        if (q) {
+          // 触发导航栏搜索按钮点击，打开 Butterfly 搜索对话框
+          const searchBtn = document.querySelector('#search-button > .search');
+          if (searchBtn) {
+            searchBtn.click();
+            // 将搜索词填入搜索对话框
+            setTimeout(() => {
+              const dialogInput = document.querySelector('#local-search .local-search-input input');
+              if (dialogInput) {
+                dialogInput.value = q;
+                dialogInput.dispatchEvent(new Event('input'));
+              }
+            }, 400);
+          }
+        }
+      }
+    });
+
     const strings = [
-      '把脑海中的构想，一点点打印成现实，是创造者独有的浪漫。',
-      '每一行代码，都是向世界交出的、一份小小的信任。',
-      '真正的热爱，是失败一百次之后，依然想再试一次。',
-      '记录不是为了证明存在，而是为了让思考留下痕迹。',
-      '折腾不止，是因为相信亲手创造，好过坐等答案。'
+      'Turning imagination into reality, one layer at a time.',
+      'Every line of code is a small act of trust toward the world.',
+      'True passion means wanting to try again, even after a hundred failures.',
+      'Documentation is not about proving existence — it\'s about letting ideas leave a trace.',
+      'We keep tinkering because we believe in building over waiting.'
     ];
 
     let stringIndex = 0;

@@ -147,8 +147,49 @@ body {
   min-height: 2.6em;
 }
 
+/* Home search box */
+.home-search-box {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.home-search-inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.home-search-icon {
+  position: absolute;
+  left: 14px;
+  color: rgba(0, 0, 0, 0.35);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.home-search-input {
+  width: 320px;
+  height: 42px;
+  border-radius: 21px;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0 16px 0 40px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  transition: width 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-search-input:focus {
+  width: 380px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
 /* Don·Lab title above typing text */
 .home-lab-title {
+  font-family: 'Poppins', sans-serif;
   font-size: 2.8rem;
   font-weight: 700;
   color: white !important;
